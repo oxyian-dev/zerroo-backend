@@ -1,0 +1,159 @@
+<div style="font-family: Inter" class="pb">
+    <table style="font-size:10pt;width: 100%;color: black;font-weight: bold;margin-bottom: 15px;border: 1px solid black;border-collapse: collapse;">
+        <tbody>
+        <tr>
+            <td>
+                <p style="font-size: 10px;">ZERROO</p>
+            </td>
+            <td style="padding: 6px;"></td>
+        </tr>
+        <tr>
+            <td style="padding-left: 6px">
+                <div>ZERABIZ ECOM LLP </div>
+                <div>
+                    <a target="_blank" href="https://www.zerroo.in" style="text-decoration:none">
+                        https://www.zerroo.in
+                    </a>
+                </div>
+                <div>
+                    GSTIN: 33AADFZ7502M1ZX
+                </div>
+            </td>
+            <td style="padding: 6px;">
+                <div>Invoice No: <span th:text="${invoice_id}"></span></div>
+                <div>Invoice Date: <span th:text="${date}"></span></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="font-size:10pt;width: 100%;color: black;font-weight: bold;font-family:'Inter',sans-serif;margin-bottom: 15px;border: 1px solid black;border-collapse: collapse;">
+        <thead style="background-color:#E6F1FB;">
+        <tr style="font: 8pt bold;font-family: 'Inter',sans-serif">
+            <td style="padding: 9px;font-weight: 600">Shipping Address</td>
+            <td style="padding: 6px;">Sold By</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="font: 14pt bold;font-family: 'Inter',sans-serif">
+            <td style="padding: 6px;font-weight: 600;font-family: 'Inter',sans-serif">
+                <div>
+                    <span th:text="${shipping_firstname}"></span>
+                    <span th:if="${shipping_lastname != null}" th:text="${shipping_lastname}"></span>
+                </div>
+                <div th:text="${shipping_address_1}"></div>
+                <div th:text="${shipping_address_2}"></div>
+                <div>
+                    <span th:text="${shipping_city}"></span>, <span th:text="${shipping_state}"></span>, <span
+                        th:text="${shipping_postcode}"></span>,
+                </div>
+                <div>
+                    Mobile: <span th:text="${shipping_phone}"></span> <span th:if="${shipping_alt_phone != null}">/ Alt Mobile: <span th:text="${shipping_alt_phone}"></span></span>
+                </div>
+            </td>
+            <td>
+                <div style="font-weight: 600;margin-bottom: 2px;">Pickup and Return Address (RTO)</div>
+                <div style="font-size:10pt;font-weight:bold">
+                    Zerroo
+                </div>
+                <div style="font-size: 10pt">
+                    5/837, Naal road,<br></br>
+                    Thennampatti, Vedasandur (TK),<br></br>
+                    Dindigul - 624802.<br></br>
+                    Email:  zerrooofficial2024@gmail.com<br></br>
+                    Service care: +91 93845 29159
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="font-size:10pt;width: 100%;color: black;font-weight: bold;font-family:'Inter',sans-serif;margin-bottom: 15px;border: 1px solid black;border-collapse: collapse;">
+        <thead style="background-color:#E6F1FB;">
+        <tr style="font: 8pt bold;font-family: 'Inter',sans-serif">
+            <td style="padding: 6px;font-weight: 600;">SNo</td>
+            <td style="padding: 6px;font-weight: 600;">SKU</td>
+            <td style="padding: 6px;font-weight: 600;">Description of Goods</td>
+            <td style="padding: 6px;font-weight: 600;">HSN</td>
+            <td style="padding: 6px;font-weight: 600;">Unit Rs</td>
+            <td style="padding: 6px;font-weight: 600;">Qty</td>
+            <td style="padding: 6px;font-weight: 600;">Total</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr style="font: 8pt bold;font-family: 'Inter',sans-serif" th:each="product,iStat: ${items}">
+            <td style="padding: 6px;" th:text="${iStat.count}"></td>
+            <td style="padding: 6px;" th:text="${product.sku}"></td>
+            <td style="padding: 6px;" th:text="${product.title}"></td>
+            <td style="padding: 6px;" th:text="${product.hsn}"></td>
+            <td style="padding: 6px;" th:text="${product.price}"></td>
+            <td style="padding: 6px;" th:text="${product.quantity}"></td>
+            <td style="padding: 6px;" th:text="${product.total}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="font-size:10pt;width: 100%;color:black;font-weight:bold;font-family:'Inter',sans-serif;margin-bottom: 15px;border: 1px solid black;border-collapse: collapse;">
+        <tbody>
+        <tr>
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Product Basic Price Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${basic}"></span>
+            </td>
+        </tr>
+        <tr th:if="${i_gst != 0}">
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Product IGST Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${i_gst}"></span>
+            </td>
+        </tr>
+        <tr th:if="${c_gst != 0}">
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Product CGST Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${c_gst}"></span>
+            </td>
+        </tr>
+        <tr th:if="${s_gst != 0}">
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Product SGST Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${s_gst}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Total Product GST Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${gst}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Product Total Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${product_total}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Shipping Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${shipping_fee}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 3px;text-align: right;font: 8pt bold;font-family:'Inter',sans-serif;">
+                <span style="margin-right: 20px;">Grand Total Rs</span>
+                <span style="min-width: 100px;display: inline-block;" th:text="${total}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font: 8pt bold;font-family: 'Inter',sans-serif">
+                <span>DECLARATION:- We declare that this invoice shows actual price of the goods described inclusive of taxes and that all particulars are true and correct.</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font: 8pt bold;font-family: 'Inter',sans-serif">
+                <span> * This is computer generated invoice and do not require any stamp or signature.</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

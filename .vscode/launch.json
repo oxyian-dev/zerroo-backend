@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HionApplication<zerroo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.hionstudios.HionApplication",
+            "projectName": "zerroo",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
