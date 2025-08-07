@@ -70,44 +70,72 @@ public class InvoiceTransaction {
         return response;
     }
 
-    public ResponseEntity<byte[]> downloadInvoice(long[] ids) {
-        String html = "<html><head><style>div{page-break-inside:avoid;@media print {.pb {page-break-before:always;}}}</style></head><body>";
-        String filename = "invoice.pdf";
-        try {
-            DbUtil.open();
-            for (long id : ids) {
-                MapResponse invoice = invoice(id);
-                if (invoice == null) {
-                    continue;
-                }
-                html += HionTemplateConfig.toString("invoice", invoice);
-                if (ids.length == 1) {
-                    filename = invoice.getString("invoice_id") + ".pdf";
-                }
-            }
-            html += "</body></html>";
-        } finally {
-            DbUtil.close();
-        }
-        ITextRenderer renderer = new ITextRenderer();
+   public ResponseEntity<byte[]> downloadInvoice(long[] ids) {
+    // Initialize HTML document
+    StringBuilder htmlBuilder = new StringBuilder();
+    htmlBuilder.append("<html><head>")
+               .append("<style>")
+               .append("div{page-break-inside:avoid;} ")
+               .append("@media print {.pb {page-break-before:always;}}")
+               .append("</style>")
+               .append("</head><body>");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            ITextFontResolver resolver = renderer.getFontResolver();
-            resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Regular.ttf").getPath(), true);
-            resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Bold.ttf").getPath(), true);
-            renderer.setDocumentFromString(html);
-            renderer.layout();
-            renderer.createPDF(outputStream);
-            byte[] bytes = outputStream.toByteArray();
-            outputStream.close();
-            return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
+    String filename = "invoices.pdf";
+    boolean anyFound = false;
+
+    DbUtil.open();
+    try {
+        for (long id : ids) {
+            MapResponse invoiceData = invoice(id);
+            if (invoiceData == null) {
+                // Invoice not found or unauthorized for this id—skip
+                continue;
+            }
+            anyFound = true;
+            htmlBuilder.append(HionTemplateConfig.toString("invoice", invoiceData));
+            if (ids.length == 1) {
+                // Use the invoice’s own ID string for filename when single
+                filename = invoiceData.getString("invoice_id") + ".pdf";
+            }
         }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        htmlBuilder.append("</body></html>");
+    } finally {
+        DbUtil.close();
     }
+
+    if (!anyFound) {
+        // No invoices processed
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    byte[] pdfBytes;
+    try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+        ITextRenderer renderer = new ITextRenderer();
+        ITextFontResolver resolver = renderer.getFontResolver();
+        // Load fonts
+        resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Regular.ttf").getPath(), true);
+        resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Bold.ttf").getPath(), true);
+
+        // Render HTML to PDF
+        renderer.setDocumentFromString(htmlBuilder.toString());
+        renderer.layout();
+        renderer.createPDF(outputStream);
+
+        pdfBytes = outputStream.toByteArray();
+    } catch (Exception e) {
+        // Log the full stack trace for debugging
+        System.err.println("Error generating PDF for IDs " + Arrays.toString(ids));
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    // Prepare HTTP headers
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_PDF);
+    headers.setContentDispositionFormData("attachment", filename);
+    headers.setCacheControl("no-cache, no-store, must-revalidate");
+
+    return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+}
+
 }
