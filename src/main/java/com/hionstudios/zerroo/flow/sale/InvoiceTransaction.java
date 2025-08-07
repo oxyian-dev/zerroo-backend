@@ -2,7 +2,7 @@ package com.hionstudios.zerroo.flow.sale;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-
+import java.util.Arrays;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
