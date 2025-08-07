@@ -89,6 +89,9 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
         cors.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://localhost:8080",
+                "http://www.zerroo.in",
+                "http://zerroo.in",
+                "https://zerroo.in",
                 "https://www.zerroo.in"));
         cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         cors.setAllowCredentials(true);
