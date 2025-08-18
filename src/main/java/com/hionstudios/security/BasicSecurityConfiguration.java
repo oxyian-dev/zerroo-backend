@@ -27,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.http.HttpMethod;
 
 import com.hionstudios.db.Handler;
 import com.hionstudios.iam.JwtAuthenticationEntryPoint;
@@ -110,6 +111,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/invoices/**").permitAll()
                         .antMatchers("/api/ui/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                         .antMatchers("/login", "/logout").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
