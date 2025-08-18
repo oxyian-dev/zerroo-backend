@@ -104,8 +104,11 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(BasicSecurityConfiguration::corsConfigurationSource))
-                .csrf(csrf -> csrf.disable())  // CSRF is already disabled here
-                .authorizeRequests(withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .authorizeRequests(auth -> auth
+                        .antMatchers("/api/invoices/pdf", "/api/invoices/pdf/**").permitAll()
+                        .antMatchers("/login", "/logout").permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(login -> login

@@ -24,7 +24,6 @@ public class InvoiceController {
     }
 
     @GetMapping("pdf")
-    @IsAdmin
     public ResponseEntity<byte[]> invoice(
             @RequestParam long[] ids,
             HttpServletResponse response) {
