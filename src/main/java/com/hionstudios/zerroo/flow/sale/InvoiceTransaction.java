@@ -1,13 +1,20 @@
 package com.hionstudios.zerroo.flow.sale;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -112,9 +119,9 @@ public class InvoiceTransaction {
     try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
         ITextRenderer renderer = new ITextRenderer();
         ITextFontResolver resolver = renderer.getFontResolver();
-        // Load fonts
-        resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Regular.ttf").getPath(), true);
-        resolver.addFont(ResourceUtils.getFile("classpath:fonts/Inter-Bold.ttf").getPath(), true);
+        // Load fonts from classpath (works in JAR and IDE)
+        resolver.addFont(extractFontToTemp("fonts/Inter-Regular.ttf"), true);
+        resolver.addFont(extractFontToTemp("fonts/Inter-Bold.ttf"), true);
 
         // Render HTML to PDF
         renderer.setDocumentFromString(htmlBuilder.toString());
@@ -136,6 +143,21 @@ public class InvoiceTransaction {
     headers.setCacheControl("no-cache, no-store, must-revalidate");
 
     return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+}
+
+// Extract a font resource from classpath to a temporary file and return its filesystem path
+private static String extractFontToTemp(String classpathLocation) throws IOException {
+    ClassPathResource resource = new ClassPathResource(classpathLocation);
+    if (!resource.exists()) {
+        throw new IOException("Font resource not found: " + classpathLocation);
+    }
+    String suffix = classpathLocation.lastIndexOf('.') >= 0 ? classpathLocation.substring(classpathLocation.lastIndexOf('.')) : ".ttf";
+    File tempFile = File.createTempFile("font-", suffix);
+    tempFile.deleteOnExit();
+    try (InputStream in = resource.getInputStream()) {
+        Files.copy(in, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+    return tempFile.getAbsolutePath();
 }
 
 }
