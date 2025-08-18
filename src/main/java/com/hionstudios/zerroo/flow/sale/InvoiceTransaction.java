@@ -78,6 +78,10 @@ public class InvoiceTransaction {
     }
 
    public ResponseEntity<byte[]> downloadInvoice(long[] ids) {
+    // Validate input
+    if (ids == null || ids.length == 0) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
     // Initialize HTML document
     StringBuilder htmlBuilder = new StringBuilder();
     htmlBuilder.append("<html><head>")
@@ -92,17 +96,26 @@ public class InvoiceTransaction {
 
     DbUtil.open();
     try {
+        System.out.println("[InvoicePDF] Starting generation for IDs: " + Arrays.toString(ids));
         for (long id : ids) {
-            MapResponse invoiceData = invoice(id);
-            if (invoiceData == null) {
-                // Invoice not found or unauthorized for this id—skip
-                continue;
-            }
-            anyFound = true;
-            htmlBuilder.append(HionTemplateConfig.toString("invoice", invoiceData));
-            if (ids.length == 1) {
-                // Use the invoice’s own ID string for filename when single
-                filename = invoiceData.getString("invoice_id") + ".pdf";
+            try {
+                System.out.println("[InvoicePDF] Fetching data for ID: " + id);
+                MapResponse invoiceData = invoice(id);
+                if (invoiceData == null) {
+                    System.out.println("[InvoicePDF] Skipping ID (not found/unauthorized): " + id);
+                    continue;
+                }
+                anyFound = true;
+                System.out.println("[InvoicePDF] Rendering template for ID: " + id);
+                String html = HionTemplateConfig.toString("invoice", invoiceData);
+                htmlBuilder.append(html);
+                if (ids.length == 1) {
+                    // Use the invoice’s own ID string for filename when single
+                    filename = invoiceData.getString("invoice_id") + ".pdf";
+                }
+            } catch (Exception t) {
+                System.err.println("[InvoicePDF] Error preparing HTML for ID " + id + ": " + t.getMessage());
+                t.printStackTrace();
             }
         }
         htmlBuilder.append("</body></html>");
@@ -120,10 +133,18 @@ public class InvoiceTransaction {
         ITextRenderer renderer = new ITextRenderer();
         ITextFontResolver resolver = renderer.getFontResolver();
         // Load fonts from classpath (works in JAR and IDE)
-        resolver.addFont(extractFontToTemp("fonts/Inter-Regular.ttf"), true);
-        resolver.addFont(extractFontToTemp("fonts/Inter-Bold.ttf"), true);
+        try {
+            System.out.println("[InvoicePDF] Loading fonts...");
+            resolver.addFont(extractFontToTemp("fonts/Inter-Regular.ttf"), true);
+            resolver.addFont(extractFontToTemp("fonts/Inter-Bold.ttf"), true);
+        } catch (IOException fe) {
+            System.err.println("[InvoicePDF] Font load failed: " + fe.getMessage());
+            fe.printStackTrace();
+            // Proceed without embedded fonts as a fallback
+        }
 
         // Render HTML to PDF
+        System.out.println("[InvoicePDF] Rendering PDF...");
         renderer.setDocumentFromString(htmlBuilder.toString());
         renderer.layout();
         renderer.createPDF(outputStream);
@@ -131,7 +152,7 @@ public class InvoiceTransaction {
         pdfBytes = outputStream.toByteArray();
     } catch (Exception e) {
         // Log the full stack trace for debugging
-        System.err.println("Error generating PDF for IDs " + Arrays.toString(ids));
+        System.err.println("[InvoicePDF] Error generating PDF for IDs " + Arrays.toString(ids));
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
