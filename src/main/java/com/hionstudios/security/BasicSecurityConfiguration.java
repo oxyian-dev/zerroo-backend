@@ -106,7 +106,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors(cors -> cors.configurationSource(BasicSecurityConfiguration::corsConfigurationSource))
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
-                        .antMatchers("/api/invoices/pdf", "/api/invoices/pdf/**").permitAll()
+                        .antMatchers("/api/invoices/**").permitAll()
                         .antMatchers("/login", "/logout").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
