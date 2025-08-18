@@ -95,7 +95,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "http://www.zerroo.in",
                 "https://zerroo.in",
                 "https://www.zerroo.in"));
-        cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowCredentials(true);
         cors.addAllowedHeader("*");
         return cors;
@@ -109,6 +109,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/invoices/**").permitAll()
+                        .antMatchers("/api/ui/**").permitAll()
                         .antMatchers("/login", "/logout").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
@@ -127,6 +128,6 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // Completely ignore security filters for invoice PDFs
-        web.ignoring().antMatchers("/api/invoices/**");
+        web.ignoring().antMatchers("/api/invoices/**", "/api/ui/**");
     }
 }
