@@ -86,8 +86,8 @@ public class InvoiceTransaction {
     StringBuilder htmlBuilder = new StringBuilder();
     htmlBuilder.append("<html><head>")
                .append("<style>")
-               .append("div{page-break-inside:avoid;} ")
-               .append("@media print {.pb {page-break-before:always;}}")
+               .append("div{page-break-inside:avoid;}")
+               // Do NOT force page break before every .pb; we will add breaks only between invoices
                .append("</style>")
                .append("</head><body>");
 
@@ -97,6 +97,7 @@ public class InvoiceTransaction {
     DbUtil.open();
     try {
         System.out.println("[InvoicePDF] Starting generation for IDs: " + Arrays.toString(ids));
+        int index = 0;
         for (long id : ids) {
             try {
                 System.out.println("[InvoicePDF] Fetching data for ID: " + id);
@@ -107,12 +108,17 @@ public class InvoiceTransaction {
                 }
                 anyFound = true;
                 System.out.println("[InvoicePDF] Rendering template for ID: " + id);
+                // Insert a page break BETWEEN invoices, not before the first
+                if (index > 0) {
+                    htmlBuilder.append("<div style='page-break-before: always;'></div>");
+                }
                 String html = HionTemplateConfig.toString("invoice", invoiceData);
                 htmlBuilder.append(html);
                 if (ids.length == 1) {
                     // Use the invoice’s own ID string for filename when single
                     filename = invoiceData.getString("invoice_id") + ".pdf";
                 }
+                index++;
             } catch (Exception t) {
                 System.err.println("[InvoicePDF] Error preparing HTML for ID " + id + ": " + t.getMessage());
                 t.printStackTrace();
