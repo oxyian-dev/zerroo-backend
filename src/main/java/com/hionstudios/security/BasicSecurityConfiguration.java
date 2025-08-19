@@ -110,6 +110,8 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
                         .antMatchers("/api/invoices/**").permitAll()
+                        .antMatchers("/api/**").permitAll()
+                        .antMatchers("/api/listing/**").permitAll()
                         .antMatchers("/api/ui/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
                         .antMatchers("/login", "/logout").permitAll()
