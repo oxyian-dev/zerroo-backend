@@ -91,11 +91,11 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
         cors.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://localhost:8080",
-                "http://www.zerroo.in",
-                "http://zerroo.in",
-                "http://www.zerroo.in",
-                "https://zerroo.in",
-                "https://www.zerroo.in"));
+                "http://www.victoryworld.in",
+                "http://victoryworld.in",
+                "http://www.victoryworld.in",
+                "https://victoryworld.in",
+                "https://www.victoryworld.in"));
         cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowCredentials(true);
         cors.addAllowedHeader("*");

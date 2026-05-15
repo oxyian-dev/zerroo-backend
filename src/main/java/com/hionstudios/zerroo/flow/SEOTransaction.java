@@ -21,7 +21,7 @@ public class SEOTransaction {
             List<MapResponse> list = Handler.findAll(sql);
             for (MapResponse response : list) {
                 xml
-                        .append("<url><loc>https://www.zerroo.in/p/")
+                        .append("<url><loc>https://www.victoryworld.in/p/")
                         .append(response.get("id"))
                         .append("/")
                         .append(StringUtil.seoEncode(response.getString("category")))
@@ -46,7 +46,7 @@ public class SEOTransaction {
             for (MapResponse response : list) {
                 String parent = response.getString("parent");
                 xml
-                        .append("<url><loc>https://www.zerroo.in/c/")
+                        .append("<url><loc>https://www.victoryworld.in/c/")
                         .append(response.get("id"))
                         .append("/")
                         .append(StringUtil.seoEncode(response.getString("category")));

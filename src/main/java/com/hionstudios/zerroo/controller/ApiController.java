@@ -64,7 +64,7 @@ public class ApiController {
     }
 
     @GetMapping("top-earners")
-    @CrossOrigin("https://top-earners.zerroo.in")
+    @CrossOrigin("https://top-earners.victoryworld.in")
     public ResponseEntity<MapResponse> topEarners() {
         return ((DbTransaction) () -> new CommonUtil().topEarners()).read();
     }

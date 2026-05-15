@@ -14,8 +14,8 @@ public class MetaObject {
     private final HashMap<String, Object> metaObject = new HashMap<>();
     private static final String TITLE = "Zerroo | Online Fashion Store";
     private static final String DESCRIPTION = "Zerroo is the first Community Commerce Business combined with Ecommerce having a wide variety of Products, provide Entrepreneurship training, to start their Business";
-    private static final String URL = "https://www.zerroo.in";
-    private static final String IMAGE = "https://www.zerroo.in/og.png";
+    private static final String URL = "https://www.victoryworld.in";
+    private static final String IMAGE = "https://www.victoryworld.in/og.png";
     private static final String KEYWORDS = "zerroo,business,earn money,ecommerce,shopping,store,tshirt,shirt,pant,kurti,entrepreneurship";
 
     public static MetaObject preset() {
@@ -132,7 +132,7 @@ public class MetaObject {
                     .setAllTitle("Zerroo | Login")
                     .setAllDescription(
                             "Login into your Zerroo User Account and make Purchases, Track your Performances and Earn More")
-                    .setAllUrl("https://www.zerroo.in/login")
+                    .setAllUrl("https://www.victoryworld.in/login")
                     .setAllImage(IMAGE).setKeywords(KEYWORDS);
         }
 
@@ -149,7 +149,7 @@ public class MetaObject {
             return new MetaObject()
                     .setAllTitle("Zerroo - Welcome Admin")
                     .setAllDescription("Zerroo - Admin")
-                    .setAllUrl("https://www.zerroo.in/admin")
+                    .setAllUrl("https://www.victoryworld.in/admin")
                     .setAllImage(IMAGE)
                     .setKeywords(KEYWORDS);
 
@@ -159,7 +159,7 @@ public class MetaObject {
             return new MetaObject()
                     .setAllTitle("Zerroo - Welcome Distributor")
                     .setAllDescription("Zerroo - Distributor")
-                    .setAllUrl("https://www.zerroo.in/dashboard")
+                    .setAllUrl("https://www.victoryworld.in/dashboard")
                     .setAllImage(IMAGE)
                     .setKeywords(KEYWORDS);
 
@@ -176,8 +176,8 @@ public class MetaObject {
                 String img = response.getString("image");
 
                 String url = parent == null
-                        ? "https://www.zerroo.in/c/" + id + "/" + StringUtil.seoEncode(categoryName)
-                        : "https://www.zerroo.in/c/" + id + "/" + StringUtil.seoEncode(categoryName) + "/"
+                        ? "https://www.victoryworld.in/c/" + id + "/" + StringUtil.seoEncode(categoryName)
+                        : "https://www.victoryworld.in/c/" + id + "/" + StringUtil.seoEncode(categoryName) + "/"
                                 + StringUtil.seoEncode(parent);
 
                 return new MetaObject()
@@ -210,7 +210,7 @@ public class MetaObject {
                         .setAllTitle(String.format("Buy %s at Zerroo Online Store",
                                 itemName))
                         .setAllDescription(description)
-                        .setAllUrl("https://www.zerroo.in/p/" + id + "/" + StringUtil.seoEncode(category))
+                        .setAllUrl("https://www.victoryworld.in/p/" + id + "/" + StringUtil.seoEncode(category))
                         .setAllImage(WorkDrive.toImg(img))
                         .setKeywords(KEYWORDS);
             } catch (Exception e) {
