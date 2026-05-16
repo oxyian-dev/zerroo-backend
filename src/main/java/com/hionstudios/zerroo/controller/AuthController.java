@@ -24,7 +24,7 @@ public class AuthController {
     Authenticator authenticator;
 
     @CrossOrigin(origins = {"https://www.victoryworld.in", "https://victoryworld.in", "http://localhost:3000", "http://localhost:8080"}, allowCredentials = "true")
-    @PostMapping("/authenticate")
+    @PostMapping({"/authenticate", "/api/authenticate", "/api/auth/login", "/api/login", "/api/v1/authenticate", "/api/v1/auth/login"})
     @PermitAll
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtRequest authenticationRequest,
