@@ -178,6 +178,7 @@ com/hionstudios/zerroo/controller/DistributorController.class
 com/hionstudios/zerroo/flow/item/ComboTransaction.class
 com/hionstudios/zerroo/model/Color.class
 com/hionstudios/zerroo/flow/sale/SaleOrderTransaction.class
+com/hionstudios/security/CorsConfig.class
 com/hionstudios/security/Generator.class
 com/hionstudios/HionApplication.class
 com/hionstudios/zerroo/flow/GenealogyUtil$1.class

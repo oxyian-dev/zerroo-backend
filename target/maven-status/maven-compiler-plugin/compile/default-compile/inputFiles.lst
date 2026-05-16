@@ -119,6 +119,7 @@
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/controller/item/CategoryController.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/DistributorTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/ServiceablePostcode.java
+/home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/security/CorsConfig.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/controller/item/SpecificationController.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/ComboGroupItem.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/oauth/ZohoApp.java
