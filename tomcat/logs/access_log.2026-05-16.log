@@ -1428,3 +1428,12 @@
 127.0.0.1 - - [16/May/2026:14:49:47 +0000] "GET /api/ui/nav/categories HTTP/1.0" 200 337
 127.0.0.1 - - [16/May/2026:14:50:04 +0000] "POST /api/auth/login HTTP/1.0" 403 20
 127.0.0.1 - - [16/May/2026:14:50:10 +0000] "OPTIONS /api/auth/login HTTP/1.0" 403 20
+127.0.0.1 - - [16/May/2026:15:07:39 +0000] "POST /api/authenticate HTTP/1.0" 405 127
+127.0.0.1 - - [16/May/2026:15:07:40 +0000] "POST /api/auth/login HTTP/1.0" 405 125
+127.0.0.1 - - [16/May/2026:15:07:41 +0000] "POST /api/authenticate HTTP/1.0" 405 127
+127.0.0.1 - - [16/May/2026:15:07:42 +0000] "POST /api/login HTTP/1.0" 405 120
+127.0.0.1 - - [16/May/2026:15:07:42 +0000] "POST /api/auth/login HTTP/1.0" 405 125
+127.0.0.1 - - [16/May/2026:15:07:45 +0000] "POST /api/v1/authenticate HTTP/1.0" 405 130
+127.0.0.1 - - [16/May/2026:15:07:45 +0000] "POST /api/v1/authenticate HTTP/1.0" 405 130
+127.0.0.1 - - [16/May/2026:15:07:46 +0000] "POST /api/v1/auth/login HTTP/1.0" 405 128
+49.47.219.138 - - [16/May/2026:15:07:58 +0000] "-" 400 435

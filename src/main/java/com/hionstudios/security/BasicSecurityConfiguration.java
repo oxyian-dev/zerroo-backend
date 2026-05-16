@@ -109,6 +109,7 @@ public class BasicSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors(cors -> cors.configurationSource(BasicSecurityConfiguration::corsConfigurationSource))
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .antMatchers("/api/invoices/**").permitAll()
                         .antMatchers("/api/**").permitAll()
                         .antMatchers("/api/listing/**").permitAll()

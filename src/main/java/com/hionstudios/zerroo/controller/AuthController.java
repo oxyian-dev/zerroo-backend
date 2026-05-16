@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class AuthController {
     @Autowired
     Authenticator authenticator;
 
+    @CrossOrigin(origins = {"https://www.victoryworld.in", "https://victoryworld.in", "http://localhost:3000", "http://localhost:8080"}, allowCredentials = "true")
     @PostMapping("/authenticate")
     @PermitAll
     public ResponseEntity<?> createAuthenticationToken(
