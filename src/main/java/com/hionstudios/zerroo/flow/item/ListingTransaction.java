@@ -12,6 +12,20 @@ import com.hionstudios.db.SqlUtil;
 
 public class ListingTransaction {
 
+    /**
+     * Get all featured items for homepage/listing
+     */
+    public MapResponse items() {
+        String sql = "Select Items.Id, Items.Group_Id, Items.Size_Id, Items.Sku, Items.Title, Items.Description, Brands.Brand, Categories.Category, Price_Lists.Mrp, Price_Lists.Price, Round(((Price_Lists.Mrp - Price_Lists.Price) / Price_Lists.Mrp * 100)) Discount, Price_Lists.Pv, (Select Image From Images Where List_Id = Items.Image_Id Order By Index Limit 1) Image, Colors.Color, Colors.Hex, Stocks.Quantity From Items Join Item_Groups On Item_Groups.Id = Items.Group_Id Join Categories On Categories.Id = Item_Groups.Category_Id Join Price_Lists On Price_Lists.Id = Items.Price_Id Left Join Image_Lists On Image_Lists.Id = Items.Image_Id Join Brands On Brands.Id = Item_Groups.Brand_Id Left Join Colors On Colors.Id = Items.Color_Id Join Stocks On Stocks.Item_Id = Items.Id And (Stocks.Quantity > 0) Where Items.Online_Status Limit 50";
+        List<MapResponse> listings = Handler.findAll(sql);
+        MapResponse response = new MapResponse(1);
+        response.put("items", listings);
+        return response;
+    }
+
+    /**
+     * Get listing by category with filters
+     */
     public MapResponse listing(
             long category,
             String sort,
@@ -23,28 +37,7 @@ public class ListingTransaction {
             List<Integer> f_discount) {
 
         // Sorting
-        String direction;
-        if (sort == null) {
-            sort = "Price_Lists.Price";
-            direction = "Asc";
-        } else if (sort.equals("latest")) {
-            sort = "Items.Created_Time";
-            direction = "Desc";
-        } else if (sort.equals("price-desc")) {
-            sort = "Price_Lists.Price";
-            direction = "Desc";
-        } else if (sort.equals("price-asc")) {
-            sort = "Price_Lists.Price";
-            direction = "Asc";
-        } else if (sort.equals("discount")) {
-            sort = "Discount";
-            direction = "Desc";
-        } else {
-            sort = "Price_Lists.Price";
-            direction = "Asc";
-        }
 
-        // Filtering
         ArrayList<String> filter = new ArrayList<>(6);
         if (f_category != null && f_category.size() > 0) {
             filter.add("(Categories.Id In (" + String.join(",", f_category) + "))");
@@ -71,6 +64,17 @@ public class ListingTransaction {
                     + Collections.min(f_discount) + ")");
         }
         String filterStr = filter.size() > 0 ? "And " + String.join("And", filter) : "";
+
+        String direction = "desc";
+        if (sort != null && !sort.isBlank()) {
+            String[] sortParts = sort.trim().split("\\s+");
+            sort = sortParts[0];
+            if (sortParts.length > 1) {
+                direction = sortParts[1];
+            }
+        } else {
+            sort = "Items.Id";
+        }
 
         String customCriteriaStr = "Items.Online_Status And (Categories.Id In (With Recursive Child as (Select Id, Parent From Categories Where Id = ? Union All Select Categories.Id, Categories.Parent From Categories Join Child On Child.Id = Categories.Parent) Select Id from Child))";
 

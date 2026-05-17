@@ -18,6 +18,6 @@ public class MailSenderFrom {
     }
 
     public static MailSenderFrom noReply() {
-        return new MailSenderFrom("no-reply@victoryworld.in", "Zerroo");
+        return new MailSenderFrom("no-reply@victoryworld.in", "Victory World");
     }
 }

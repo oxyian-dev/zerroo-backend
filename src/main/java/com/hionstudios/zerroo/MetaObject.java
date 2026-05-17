@@ -12,8 +12,8 @@ import com.hionstudios.zerroo.oauth.WorkDrive;
 
 public class MetaObject {
     private final HashMap<String, Object> metaObject = new HashMap<>();
-    private static final String TITLE = "Zerroo | Online Fashion Store";
-    private static final String DESCRIPTION = "Zerroo is the first Community Commerce Business combined with Ecommerce having a wide variety of Products, provide Entrepreneurship training, to start their Business";
+    private static final String TITLE = "Victory World | Online Fashion Store";
+    private static final String DESCRIPTION = "Victory World is the first Community Commerce Business combined with Ecommerce having a wide variety of Products, provide Entrepreneurship training, to start their Business";
     private static final String URL = "https://www.victoryworld.in";
     private static final String IMAGE = "https://www.victoryworld.in/og.png";
     private static final String KEYWORDS = "zerroo,business,earn money,ecommerce,shopping,store,tshirt,shirt,pant,kurti,entrepreneurship";
@@ -129,9 +129,9 @@ public class MetaObject {
     private static class Generator {
         public static MetaObject login() {
             return new MetaObject()
-                    .setAllTitle("Zerroo | Login")
+                    .setAllTitle("Victory World | Login")
                     .setAllDescription(
-                            "Login into your Zerroo User Account and make Purchases, Track your Performances and Earn More")
+                            "Login into your Victory World User Account and make Purchases, Track your Performances and Earn More")
                     .setAllUrl("https://www.victoryworld.in/login")
                     .setAllImage(IMAGE).setKeywords(KEYWORDS);
         }
@@ -147,8 +147,8 @@ public class MetaObject {
 
         public static MetaObject admin() {
             return new MetaObject()
-                    .setAllTitle("Zerroo - Welcome Admin")
-                    .setAllDescription("Zerroo - Admin")
+                    .setAllTitle("Victory World - Welcome Admin")
+                    .setAllDescription("Victory World - Admin")
                     .setAllUrl("https://www.victoryworld.in/admin")
                     .setAllImage(IMAGE)
                     .setKeywords(KEYWORDS);
@@ -157,8 +157,8 @@ public class MetaObject {
 
         public static MetaObject distributor() {
             return new MetaObject()
-                    .setAllTitle("Zerroo - Welcome Distributor")
-                    .setAllDescription("Zerroo - Distributor")
+                    .setAllTitle("Victory World - Welcome Distributor")
+                    .setAllDescription("Victory World - Distributor")
                     .setAllUrl("https://www.victoryworld.in/dashboard")
                     .setAllImage(IMAGE)
                     .setKeywords(KEYWORDS);
@@ -181,9 +181,9 @@ public class MetaObject {
                                 + StringUtil.seoEncode(parent);
 
                 return new MetaObject()
-                        .setAllTitle(String.format("Buy %s at Zerroo Online Store",
+                        .setAllTitle(String.format("Buy %s at Victory World Online Store",
                                 categoryName))
-                        .setAllDescription(String.format("Buy %s at Zerroo Online Store",
+                        .setAllDescription(String.format("Buy %s at Victory World Online Store",
                                 categoryName))
                         .setAllUrl(url)
                         .setAllImage(WorkDrive.toImg(img))
@@ -207,7 +207,7 @@ public class MetaObject {
                 String category = response.getString("category");
 
                 return new MetaObject()
-                        .setAllTitle(String.format("Buy %s at Zerroo Online Store",
+                        .setAllTitle(String.format("Buy %s at Victory World Online Store",
                                 itemName))
                         .setAllDescription(description)
                         .setAllUrl("https://www.victoryworld.in/p/" + id + "/" + StringUtil.seoEncode(category))

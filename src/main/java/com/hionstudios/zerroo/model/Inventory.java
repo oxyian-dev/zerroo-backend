@@ -5,7 +5,7 @@ import org.javalite.activejdbc.annotations.Cached;
 
 @Cached
 public class Inventory extends Model {
-    public static final String ZERROO_CHENNAI = "Zerroo Chennai";
+    public static final String ZERROO_CHENNAI = "Victory World Chennai";
 
     public Inventory() {
     }

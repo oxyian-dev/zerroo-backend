@@ -18,6 +18,12 @@ import com.hionstudios.zerroo.flow.item.ListingTransaction;
 @RequestMapping("api/listing")
 @RestController
 public class ListingController {
+    @GetMapping("items")
+    @PermitAll
+    public ResponseEntity<MapResponse> items() {
+        return ((DbTransaction) () -> new ListingTransaction().items()).read();
+    }
+
     @GetMapping("items/category/{category}")
     @PermitAll
     public ResponseEntity<MapResponse> listing(

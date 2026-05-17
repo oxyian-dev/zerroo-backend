@@ -110,7 +110,7 @@ public class PurchaseTransaction {
                         + "<p>Once your order is shipped, we will notify you with the tracking details.</p>"
                         + "<p>If you have any further questions, please do not hesitate to contact our support team.</p>"
                         + "<p>Thank you for choosing us. We look forward to serving you again!</p>"
-                        + "<p>Best regards,<br>Zerroo Team</p>",
+                        + "<p>Best regards,<br>Victory World Team</p>",
                 name, saleOrderId);
 
         MailUtil.sendMailAsync(

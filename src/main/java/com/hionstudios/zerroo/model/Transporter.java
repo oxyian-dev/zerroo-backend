@@ -5,7 +5,7 @@ import org.javalite.activejdbc.annotations.Cached;
 
 @Cached
 public class Transporter extends Model {
-    public static final String ZERROO = "Zerroo";
+    public static final String ZERROO = "Victory World";
 
     public Transporter() {
     }

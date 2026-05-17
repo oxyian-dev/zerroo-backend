@@ -99,7 +99,7 @@ public class DistributorTransaction {
         } else {
             Distributor.update("Right_Id = ?", "Id = ?", id, parent);
         }
-        MailUtil.sendMailAsync(MailSenderFrom.noReply(), email, "Welcome to Zerroo",
+        MailUtil.sendMailAsync(MailSenderFrom.noReply(), email, "Welcome to Victory World",
                 "Username: " + username + "\n" + "Password: " + password, false);
         MapResponse response = MapResponse.success();
         response.put("id", id);

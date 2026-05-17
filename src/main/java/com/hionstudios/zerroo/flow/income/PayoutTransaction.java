@@ -55,7 +55,7 @@ public class PayoutTransaction {
     }
 
     public MapResponse axisBankEntries(long id, DataGridParams params) {
-        String sql = "Select Payout_Entries.Id, Users.Username ZID, Payout_Entries.Firstname || ' ' || Payout_Entries.Lastname \"Name\", Payout_Entries.City, Payout_Entries.Account_Number \"Account Number\", Payout_Entries.Amount, 'Zerroo' Description, 'zerrooofficial2024@gmail.com' Email From Payout_Entries Join Users On Users.Id = Payout_Entries.Distributor_Id";
+        String sql = "Select Payout_Entries.Id, Users.Username ZID, Payout_Entries.Firstname || ' ' || Payout_Entries.Lastname \"Name\", Payout_Entries.City, Payout_Entries.Account_Number \"Account Number\", Payout_Entries.Amount, 'Victory World' Description, 'victoryworld@gmail.com' Email From Payout_Entries Join Users On Users.Id = Payout_Entries.Distributor_Id";
 
         HashMap<String, String> mapping = new HashMap<>(1);
         mapping.put("ZID", "Users.Username");
@@ -83,7 +83,7 @@ public class PayoutTransaction {
     }
 
     public MapResponse nonAxisBankEntries(long id, DataGridParams params) {
-        String sql = "Select Payout_Entries.Id, Users.Username ZID, Payout_Entries.Firstname || ' ' || Payout_Entries.Lastname \"Name\", Payout_Entries.City, Payout_Entries.Account_Number \"Account Number\", Payout_Entries.Amount, 'Zerroo' Description, Payout_Entries.IFSC, Payout_Entries.Bank, 'zerrooofficial2024@gmail.com' Email From Payout_Entries Join Users On Users.Id = Payout_Entries.Distributor_Id";
+        String sql = "Select Payout_Entries.Id, Users.Username ZID, Payout_Entries.Firstname || ' ' || Payout_Entries.Lastname \"Name\", Payout_Entries.City, Payout_Entries.Account_Number \"Account Number\", Payout_Entries.Amount, 'Victory World' Description, Payout_Entries.IFSC, Payout_Entries.Bank, 'victoryworld@gmail.com' Email From Payout_Entries Join Users On Users.Id = Payout_Entries.Distributor_Id";
 
         HashMap<String, String> mapping = new HashMap<>(1);
         mapping.put("ZID", "Users.Username");
