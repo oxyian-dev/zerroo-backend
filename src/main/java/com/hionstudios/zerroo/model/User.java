@@ -26,6 +26,6 @@ public class User extends Model {
     }
 
     private static String generate(long id) {
-        return "ZERR00" + id;
+        return String.format("VW%04d", id);
     }
 }

@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 
 public enum Generator {
     OTP(6, "0123456789"),
-    PASSWORD(6, "01234567890");
+    PASSWORD(6, "0123456789");
 
     private final int length;
     private final String charset;
