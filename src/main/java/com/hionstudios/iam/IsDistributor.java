@@ -9,6 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ROLE_Distributor')")
+@PreAuthorize("hasAuthority('ROLE_Distributor')")
 public @interface IsDistributor {    
 }
