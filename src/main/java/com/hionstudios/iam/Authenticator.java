@@ -4,6 +4,7 @@ import static com.hionstudios.MapResponse.failure;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class Authenticator {
 
     public ResponseEntity<?> authenticate(
             JwtRequest authRequest,
+            HttpServletRequest request,
             HttpServletResponse response) {
         String username = authRequest.getUsername();
         String password = authRequest.getPassword();
@@ -42,7 +44,7 @@ public class Authenticator {
             return ResponseEntity.badRequest().body(MapResponse.failure());
         }
         JwtResponse jwtResponse = construct(userDetails);
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader());
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader(request));
         MapResponse newResponse = MapResponse.success();
         newResponse.put("firstname", userDetails.getFirstame());
         newResponse.put("lastname", userDetails.getLastame());

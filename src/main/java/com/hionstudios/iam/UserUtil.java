@@ -25,9 +25,18 @@ public class UserUtil {
 
     public static MapResponse auth() {
         if (isLoggedIn()) {
-            long userid = getUserid();
-            String sql = "Select Id, Firstname From Users Where Id = ?";
-            return Handler.findFirst(sql, userid);
+            HionUserDetails user = getUserDetails();
+            MapResponse response = MapResponse.success();
+            response.put("id", user.getUserid());
+            response.put("firstname", user.getFirstame());
+            response.put("lastname", user.getLastame());
+            response.put("phone", user.getPhone());
+            response.put("email", user.getEmail());
+            response.put("type", user.getType());
+            response.put("roles", user.getRoles());
+            response.put("avatar", user.getAvatar());
+            response.put("username", user.getUsername());
+            return response;
         } else {
             return new MapResponse();
         }

@@ -3,6 +3,8 @@ package com.hionstudios.iam;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.hionstudios.time.TimeUtil;
 
 public class JwtResponse implements Serializable {
@@ -23,9 +25,36 @@ public class JwtResponse implements Serializable {
         return expiry;
     }
 
-    public String toCookieHeader() {
+    public String toCookieHeader(HttpServletRequest request) {
         long expiry = getExpiry().getTime();
-        return "auth=" + getJwt() + ";Path=/;SameSite=None;Secure=None;max-age="
-                + ((expiry - TimeUtil.currentTime()) / 1000);
+        long maxAge = (expiry - TimeUtil.currentTime()) / 1000;
+        boolean secure = isSecureRequest(request);
+
+        StringBuilder cookie = new StringBuilder("auth=")
+                .append(getJwt())
+                .append(";Path=/")
+                .append(";HttpOnly")
+                .append(";Max-Age=")
+                .append(maxAge);
+
+        if (secure) {
+            // Cross-site frontend/backend auth needs SameSite=None with Secure.
+            cookie.append(";SameSite=None;Secure");
+        } else {
+            // Local HTTP development fallback.
+            cookie.append(";SameSite=Lax");
+        }
+        return cookie.toString();
+    }
+
+    private static boolean isSecureRequest(HttpServletRequest request) {
+        if (request == null) {
+            return true;
+        }
+        if (request.isSecure()) {
+            return true;
+        }
+        String forwardedProto = request.getHeader("X-Forwarded-Proto");
+        return forwardedProto != null && "https".equalsIgnoreCase(forwardedProto);
     }
 }

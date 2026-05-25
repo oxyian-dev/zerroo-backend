@@ -77,7 +77,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 if (jwtTokenUtil.checkThreshold(jwtToken)) {
                     JwtResponse jwtResponse = authenticator.construct(userDetails);
-                    response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader());
+                    response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader(request));
                 }
             }
         }

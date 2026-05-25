@@ -1,6 +1,7 @@
 package com.hionstudios.zerroo.controller;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,9 @@ public class AuthController {
     @PermitAll
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtRequest authenticationRequest,
+            HttpServletRequest request,
             HttpServletResponse response) {
-        return authenticator.authenticate(authenticationRequest, response);
+        return authenticator.authenticate(authenticationRequest, request, response);
     }
 
     @GetMapping("api/auth")

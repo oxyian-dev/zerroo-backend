@@ -21,7 +21,7 @@ public class HionUserDetailsService implements UserDetailsService {
                 sql = "Select Users.Id, Users.Firstname, Users.Lastname, Users.Avatar, Users.Phone, Users.Email, Users.Password, User_Types.Type, Array(Select Role From Roles Join User_Roles On User_Roles.Role_Id = Roles.Id And User_Roles.User_Id = Users.Id) Roles From Users Join User_Types On User_Types.Id = Users.Type_Id And User_Types.Type = ? Where Email = ?";
                 return getUserDetails(sql, UserType.ORGANISATION_USER, username);
             } else {
-                sql = "Select Users.Id, Users.Firstname, Users.Lastname, Users.Avatar, Users.Username, Users.Phone, Users.Email, Users.Password, User_Types.Type, Array['Distributor'] as Roles From Users Join User_Types On User_Types.Id = Users.Type_Id And User_Types.Type = ? Join Distributors On Distributors.Id = Users.Id And Distributors.Active Where Username = ?";
+                sql = "Select Users.Id, Users.Firstname, Users.Lastname, Users.Avatar, Users.Username, Users.Phone, Users.Email, Users.Password, User_Types.Type, Array(Select Role From Roles Join User_Roles On User_Roles.Role_Id = Roles.Id And User_Roles.User_Id = Users.Id) Roles From Users Join User_Types On User_Types.Id = Users.Type_Id And User_Types.Type = ? Join Distributors On Distributors.Id = Users.Id And Distributors.Active Where Username = ?";
                 return getUserDetails(sql, UserType.DISTRIBUTOR, username);
             }
         } finally {

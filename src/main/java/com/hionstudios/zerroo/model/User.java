@@ -13,7 +13,7 @@ public class User extends Model {
     public User(String firstname, String lastname, String phone, String email, String password) {
         this();
         long id = Handler.getLong(
-                "Select Count(Users.id) + 1 From Users Join User_Types On User_Types.Id = Users.Type_Id And User_Types.Type = ?",
+                "Select coalesce(max(Users.id), 0) + 1 From Users Join User_Types On User_Types.Id = Users.Type_Id And User_Types.Type = ?",
                 UserType.DISTRIBUTOR);
         set("id", id);
         set("username", generate(id));
