@@ -237,3 +237,15 @@
 20.169.105.90 - - [25/May/2026:11:24:37 +0000] "GET /hudson HTTP/1.1" 401 144
 176.65.139.66 - - [25/May/2026:11:26:19 +0000] "GET /login HTTP/1.1" 500 153
 190.14.253.35 - - [25/May/2026:12:00:01 +0000] "GET /manager/html HTTP/1.1" 401 145
+127.0.0.1 - - [25/May/2026:12:11:29 +0000] "GET /api/brands HTTP/1.1" 403 31
+127.0.0.1 - - [25/May/2026:12:11:29 +0000] "GET /api/ui/featured HTTP/1.1" 403 31
+127.0.0.1 - - [25/May/2026:12:11:29 +0000] "GET /api/ui/nav/categories HTTP/1.1" 403 31
+127.0.0.1 - - [25/May/2026:12:11:45 +0000] "GET /api/ui/nav/categories HTTP/1.1" 200 64
+127.0.0.1 - - [25/May/2026:12:11:45 +0000] "GET /api/ui/featured HTTP/1.1" 200 62
+127.0.0.1 - - [25/May/2026:12:11:45 +0000] "GET /api/brands HTTP/1.1" 200 159
+127.0.0.1 - - [25/May/2026:12:11:48 +0000] "OPTIONS /authenticate HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2026:12:11:48 +0000] "POST /authenticate HTTP/1.1" 200 221
+127.0.0.1 - - [25/May/2026:12:21:16 +0000] "POST /authenticate HTTP/1.1" 200 239
+127.0.0.1 - - [25/May/2026:12:21:17 +0000] "GET /api/distributors/dashboard HTTP/1.1" 200 360
+127.0.0.1 - - [25/May/2026:12:21:17 +0000] "POST /authenticate HTTP/1.1" 200 212
+127.0.0.1 - - [25/May/2026:12:21:18 +0000] "GET /api/admin/dashboard HTTP/1.1" 200 248
