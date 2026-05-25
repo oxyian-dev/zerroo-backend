@@ -194,6 +194,10 @@ public class AdminUserTransaction {
     }
 
     public MapResponse addPv(long id, double pv, boolean recursive) {
+        if (pv <= 0) {
+            return MapResponse.failure("PV should be greater than 0");
+        }
+
         if (recursive) {
             GenealogyUtil.addPv(id, pv);
         } else {

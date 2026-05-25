@@ -75,7 +75,8 @@ public class GenealogyUtil {
             final double sp_pv = distributor.getDouble("sp_pv");
 
             final double findCutoffSpPv = total - Constants.MAX_SELF_PV;
-            final double new_cutoff_self_pv = cutoff_self_pv + Constants.MAX_SELF_PV - self_pv;
+            final double selfPvContribution = Constants.MAX_SELF_PV - self_pv;
+            final double new_cutoff_self_pv = cutoff_self_pv + selfPvContribution;
 
             distributor.set("self_pv", Constants.MAX_SELF_PV);
             distributor.set("cutoff_self_pv", new_cutoff_self_pv);
@@ -83,7 +84,8 @@ public class GenealogyUtil {
             distributor.set("sp_pv", sp_pv + findCutoffSpPv);
             distributor.set("cutoff_sp_pv", cutoff_sp_pv + findCutoffSpPv);
 
-            addUplinePv[0] = new_cutoff_self_pv;
+            // Only newly-added self PV should propagate to uplines, not cumulative cutoff self PV.
+            addUplinePv[0] = selfPvContribution;
             addSpPv = findCutoffSpPv;
         }
 
