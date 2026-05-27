@@ -11,4 +11,34 @@ public class Branch extends Model {
         return Branch.findFirst("gstin = ?", gstin)
                 .getInteger("id");
     }
+
+    public Branch() {
+    }
+
+    public Branch(
+            String branch,
+            String sourceOfSupply,
+            String phone,
+            String email,
+            String address1,
+            String address2,
+            String postcode,
+            String landmark,
+            String city,
+            String state,
+            String country,
+            String gstin) {
+        set("branch", branch);
+        set("source_of_supply", sourceOfSupply);
+        set("phone", phone);
+        set("email", email);
+        set("address_1", address1);
+        set("address_2", address2);
+        set("postcode", postcode);
+        set("landmark", landmark);
+        set("city", city);
+        set("state", state);
+        set("country", country);
+        set("gstin", gstin);
+    }
 }

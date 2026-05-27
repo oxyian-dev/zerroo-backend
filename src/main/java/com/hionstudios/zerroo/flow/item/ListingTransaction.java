@@ -141,9 +141,16 @@ public class ListingTransaction {
     }
 
     public MapResponse item(long id) {
-        String sql = "Select Items.Id, Items.Title, Items.Description, Items.Group_Id, Item_Groups.Category_Id, Categories.Category, Items.Size_Id, Sizes.Size, Items.Color_Id, Colors.Color, Colors.Hex, Brands.Brand, Price_Lists.Mrp, Price_Lists.Price, Round(((Price_Lists.Mrp - Price_Lists.Price) / Price_Lists.Mrp * 100)) Discount, Price_Lists.Pv, Array(Select Images.Image From Images Where Images.List_Id = Items.Image_Id Order By Index) Images, Coalesce(Stocks.Quantity, 0) Quantity From Items Join Item_Groups On Item_Groups.Id = Items.Group_Id Join Categories On Categories.Id = Item_Groups.Category_Id Join Brands On Brands.Id = Item_Groups.Brand_Id Join Price_Lists On Price_Lists.Id = Items.Price_Id Left Join Sizes On Sizes.Id = Items.Size_Id Left Join Colors On Colors.Id = Items.Color_Id Join Stocks On Stocks.Item_Id = Items.Id Where Items.Id = ?";
+        String sql = "Select Items.Id, Items.Title, Items.Description, Items.Group_Id, Item_Groups.Category_Id, Categories.Category, Items.Size_Id, Sizes.Size, Items.Color_Id, Colors.Color, Colors.Hex, Brands.Brand, Price_Lists.Mrp, Price_Lists.Price, Round(((Price_Lists.Mrp - Price_Lists.Price) / Price_Lists.Mrp * 100)) Discount, Price_Lists.Pv, Array(Select Images.Image From Images Where Images.List_Id = Items.Image_Id Order By Index) Images, Coalesce(Stocks.Quantity, 0) Quantity From Items Join Item_Groups On Item_Groups.Id = Items.Group_Id Join Categories On Categories.Id = Item_Groups.Category_Id Join Brands On Brands.Id = Item_Groups.Brand_Id Join Price_Lists On Price_Lists.Id = Items.Price_Id Left Join Sizes On Sizes.Id = Items.Size_Id Left Join Colors On Colors.Id = Items.Color_Id Left Join Stocks On Stocks.Item_Id = Items.Id Where Items.Id = ?";
         MapResponse item = Handler.findFirst(sql, id);
-        assert item != null;
+        if (item == null) {
+            MapResponse response = new MapResponse();
+            response.put("item", null);
+            response.put("sizes", new ArrayList<>());
+            response.put("colors", new ArrayList<>());
+            response.put("specifications", new ArrayList<>());
+            return response;
+        }
         Long color = item.getLong("color_id");
         long group = item.getLong("group_id");
 

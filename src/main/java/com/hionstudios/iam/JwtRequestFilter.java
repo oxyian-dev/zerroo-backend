@@ -59,6 +59,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 }
             }
         }
+        if (username == null) {
+            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                jwtToken = authHeader.substring(7);
+                if (jwtTokenUtil.getExpirationDateFromToken(jwtToken).getTime() > expiry) {
+                    username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                }
+            }
+        }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             HionUserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);

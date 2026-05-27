@@ -126,12 +126,14 @@
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/cutoff/IncomeTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/controller/admin/AdminController.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/ServletInitializer.java
+/home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/BranchTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/InwardItem.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/iam/JwtTokenUtil.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/variables/MIME.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/sale/PurchaseTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/Size.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/UserHistory.java
+/home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/controller/BranchController.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/sale/ShipmentTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/Wishlist.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/Role.java

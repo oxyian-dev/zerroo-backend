@@ -22,6 +22,7 @@ com/hionstudios/zerroo/flow/InventoryTransaction.class
 com/hionstudios/iam/IsDistributor.class
 com/hionstudios/zerroo/model/SaleOrderShippingStatus.class
 com/hionstudios/iam/Authenticator.class
+com/hionstudios/zerroo/flow/BranchTransaction.class
 com/hionstudios/zerroo/model/KycVerificationStatus.class
 com/hionstudios/zerroo/flow/PurchaseWalletFlow.class
 com/hionstudios/iam/JwtRequest.class
@@ -92,6 +93,7 @@ com/hionstudios/zerroo/flow/item/ItemTransaction.class
 com/hionstudios/zerroo/flow/AdminUserTransaction.class
 com/hionstudios/zerroo/model/PriceList.class
 com/hionstudios/zerroo/model/PurchaseWalletTransactionType.class
+com/hionstudios/zerroo/controller/BranchController.class
 com/hionstudios/zerroo/model/Role.class
 com/hionstudios/zerroo/variables/MIME.class
 com/hionstudios/zerroo/controller/item/SpecificationController.class
