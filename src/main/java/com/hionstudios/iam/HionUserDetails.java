@@ -2,8 +2,10 @@ package com.hionstudios.iam;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -54,13 +56,46 @@ public class HionUserDetails implements UserDetails {
         } else {
             this.username = email;
         }
-        Object roleObj = userDetails.get("roles");
-        if (roleObj instanceof ArrayList<?>) {
-            ((ArrayList<?>) roleObj).forEach(role -> {
-                this.roles.add(role);
-                this.authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-            });
+
+        if (UserType.DISTRIBUTOR.equals(type)) {
+            this.authorities.add(new SimpleGrantedAuthority("ROLE_Distributor"));
         }
+
+        Object roleObj = userDetails.get("roles");
+        for (Object role : normalizeRoles(roleObj)) {
+            if (role == null) {
+                continue;
+            }
+            String roleName = role.toString().trim();
+            if (roleName.isEmpty()) {
+                continue;
+            }
+            this.roles.add(roleName);
+            this.authorities.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+        }
+    }
+
+    private static List<Object> normalizeRoles(Object roleObj) {
+        if (roleObj == null) {
+            return List.of();
+        }
+        if (roleObj instanceof List<?>) {
+            return new ArrayList<>((List<?>) roleObj);
+        }
+        if (roleObj instanceof Collection<?>) {
+            return new ArrayList<>((Collection<?>) roleObj);
+        }
+        if (roleObj.getClass().isArray()) {
+            return Arrays.asList((Object[]) roleObj);
+        }
+        if (roleObj instanceof String) {
+            String rolesString = ((String) roleObj).trim();
+            if (rolesString.isEmpty()) {
+                return List.of();
+            }
+            return Arrays.asList(rolesString.split("\\s*,\\s*"));
+        }
+        return List.of(roleObj);
     }
 
     @Override

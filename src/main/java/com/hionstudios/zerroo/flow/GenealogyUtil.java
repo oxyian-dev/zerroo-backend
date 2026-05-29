@@ -46,53 +46,16 @@ public class GenealogyUtil {
         final double self_pv = distributor.getDouble("self_pv");
         final double cutoff_self_pv = distributor.getDouble("cutoff_self_pv");
 
-        double total = self_pv + pv;
-
         // Declaring it final to use it inside the Anonymous class
         // Dirty Code
         final double[] addUplinePv = { 0 };
-        double addSpPv = 0;
 
-        if (self_pv >= Constants.MAX_SELF_PV) {
-            // Update SP PV only
-            final double cutoff_sp_pv = distributor.getDouble("cutoff_sp_pv");
-            final double sp_pv = distributor.getDouble("sp_pv");
-
-            distributor.set("cutoff_sp_pv", cutoff_sp_pv + pv);
-            distributor.set("sp_pv", sp_pv + pv);
-
-            addSpPv = pv;
-        } else if (total <= Constants.MAX_SELF_PV) {
-            // No need to update SP PV
-            distributor.set("cutoff_self_pv", cutoff_self_pv + pv);
-            distributor.set("self_pv", total);
-
-            addUplinePv[0] = pv;
-        } else {
-            // While adding PV, the total PV will be exceeding the Max PV
-            // Update both SP PV & Self PV.
-            final double cutoff_sp_pv = distributor.getDouble("cutoff_sp_pv");
-            final double sp_pv = distributor.getDouble("sp_pv");
-
-            final double findCutoffSpPv = total - Constants.MAX_SELF_PV;
-            final double selfPvContribution = Constants.MAX_SELF_PV - self_pv;
-            final double new_cutoff_self_pv = cutoff_self_pv + selfPvContribution;
-
-            distributor.set("self_pv", Constants.MAX_SELF_PV);
-            distributor.set("cutoff_self_pv", new_cutoff_self_pv);
-
-            distributor.set("sp_pv", sp_pv + findCutoffSpPv);
-            distributor.set("cutoff_sp_pv", cutoff_sp_pv + findCutoffSpPv);
-
-            // Only newly-added self PV should propagate to uplines, not cumulative cutoff self PV.
+        double remainingSelfPv = Math.max(0, Constants.MAX_SELF_PV - self_pv);
+        double selfPvContribution = Math.min(pv, remainingSelfPv);
+        if (selfPvContribution > 0) {
+            distributor.set("cutoff_self_pv", cutoff_self_pv + selfPvContribution);
+            distributor.set("self_pv", self_pv + selfPvContribution);
             addUplinePv[0] = selfPvContribution;
-            addSpPv = findCutoffSpPv;
-        }
-
-        // Add SP Income when SP PV > 0
-        if (addSpPv > 0) {
-            long cutoffId = CutoffTransaction.getCurrentCutoffId();
-            IncomeCalculator.spIncome(distributor, cutoffId, addSpPv);
         }
 
         if (distributor.isModified()) {

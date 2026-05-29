@@ -3,6 +3,8 @@ package com.hionstudios.zerroo.model;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Cached;
 
+import com.hionstudios.db.Handler;
+
 @Cached
 public class Inventory extends Model {
     public static final String ZERROO_CHENNAI = "Victory World Chennai";
@@ -39,6 +41,14 @@ public class Inventory extends Model {
     }
 
     public static long getDefaultInventory() {
-        return getId(ZERROO_CHENNAI);
+        Inventory inventory = Inventory.findFirst("inventory = ?", ZERROO_CHENNAI);
+        if (inventory != null) {
+            return inventory.getLongId();
+        }
+        Long id = Handler.getLong("Select Id From Inventories Order By Id Limit 1");
+        if (id == null) {
+            throw new IllegalStateException("No inventories configured");
+        }
+        return id;
     }
 }

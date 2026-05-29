@@ -14,7 +14,7 @@ public class Cutoff extends Model {
         set("created_time", time);
     }
 
-    public static long getCurrentId() {
-        return Handler.getLong("Select Max(Id) From Cutoffs");
+    public static Long getCurrentId() {
+        return Handler.getLong("Select Max(Id) Cutoff_Id From Cutoffs");
     }
 }

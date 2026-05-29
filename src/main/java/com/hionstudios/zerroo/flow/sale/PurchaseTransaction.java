@@ -1,6 +1,7 @@
 package com.hionstudios.zerroo.flow.sale;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.hionstudios.MapResponse;
 import com.hionstudios.db.Handler;
@@ -22,104 +23,112 @@ import com.hionstudios.zerroo.params.OrderParams;
 
 public class PurchaseTransaction {
     public MapResponse purchase(long addressId, boolean shipping) {
-        long time = TimeUtil.currentTime();
-        long userid = UserUtil.getUserid();
-        Address[] addresses = getAddresses(userid, addressId);
-        Address shippingAddress = addresses[0];
-        Address billingAddress = addresses[0];
-        OrderParams params = new OrderParams();
-        constructParam(params, shippingAddress, billingAddress);
-        String sql = "Select Carts.Quantity, Carts.Item_Id, Price_Lists.Mrp, Price_Lists.Price, Price_Lists.Cost, Price_Lists.Gst_Percent, Price_Lists.Pv, Carts.Combo_Id From Carts Join Items On Items.Id = Carts.Item_Id Left Join Combo_Groups On Combo_Groups.Id = Carts.Combo_Group_Id Join Price_Lists On Price_Lists.Id = (Case When Combo_Groups.Price_Id Is Not Null Then Combo_Groups.Price_Id Else Items.Price_Id End) Where Carts.User_Id = ?";
-        List<MapResponse> cartItems = Handler.findAll(sql, userid);
-        if (cartItems.size() == 0) {
-            return MapResponse.failure("Not Cart Items Found");
-        }
-        double totalPrice = 0, shippingCharge = shipping(shipping);
-        for (MapResponse cartItem : cartItems) {
-            long itemId = cartItem.getLong("item_id");
-            int quantity = cartItem.getInt("quantity");
-            double price = cartItem.getDouble("price");
-            if (!StockTransaction.isAvailable(itemId, quantity)) {
-                return MapResponse.failure("Insufficient Stock");
+        try {
+            long time = TimeUtil.currentTime();
+            long userid = UserUtil.getUserid();
+            Address[] addresses = getAddresses(userid, addressId);
+            if (addresses.length == 0 || addresses[0] == null) {
+                return MapResponse.failure("Address not found");
             }
-            totalPrice += price * quantity;
-        }
-        double purchaseWallet = Handler.getDouble("Select Purchase_Wallet From Distributors Where Id = ?", userid);
-        if (purchaseWallet < (totalPrice + shippingCharge)) {
-            return MapResponse.failure("Insufficient funds.");
-        } else {
-            PurchaseWalletFlow.minus(userid, totalPrice + shippingCharge, PurchaseWalletTransactionType.PURCHASE);
-        }
-        boolean isTn = params.getShippingState().equals("Tamil Nadu");
-        long currentCutoffId = Cutoff.getCurrentId();
-        SaleOrder saleOrder = new SaleOrder(
-                params,
-                time,
-                userid,
-                currentCutoffId,
-                shippingCharge,
-                isTn);
-
-        if (!saleOrder.insert()) {
-            return MapResponse.failure("Try again");
-        }
-
-        long saleOrderId = saleOrder.getLongId();
-        double totalPv = 0;
-
-        for (MapResponse cartItem : cartItems) {
-            long itemId = cartItem.getLong("item_id");
-            Long comboId = cartItem.getLong("combo_id");
-            double mrp = cartItem.getDouble("mrp");
-            double price = cartItem.getDouble("price");
-            double cost = cartItem.getDouble("cost");
-            int gstPercent = cartItem.getInt("gst_percent");
-            double pv = cartItem.getDouble("pv");
-            int quantity = cartItem.getInt("quantity");
-            totalPv += pv * quantity;
-            for (int i = 0; i < quantity; i++) {
-                SaleOrderItem saleOrderItem = new SaleOrderItem(
-                        saleOrderId,
-                        itemId,
-                        comboId,
-                        mrp,
-                        price,
-                        cost,
-                        gstPercent,
-                        pv,
-                        isTn);
-                if (!saleOrderItem.insert()) {
-                    return MapResponse.failure("Try again");
+            Address shippingAddress = addresses[0];
+            Address billingAddress = addresses.length > 1 && addresses[1] != null ? addresses[1] : addresses[0];
+            OrderParams params = new OrderParams();
+            constructParam(params, shippingAddress, billingAddress);
+            String sql = "Select Carts.Quantity, Carts.Item_Id, Price_Lists.Mrp, Price_Lists.Price, Price_Lists.Cost, Price_Lists.Gst_Percent, Price_Lists.Pv, Carts.Combo_Id From Carts Join Items On Items.Id = Carts.Item_Id Left Join Combo_Groups On Combo_Groups.Id = Carts.Combo_Group_Id Join Price_Lists On Price_Lists.Id = (Case When Combo_Groups.Price_Id Is Not Null Then Combo_Groups.Price_Id Else Items.Price_Id End) Where Carts.User_Id = ?";
+            List<MapResponse> cartItems = Handler.findAll(sql, userid);
+            if (cartItems.size() == 0) {
+                return MapResponse.failure("Not Cart Items Found");
+            }
+            double totalPrice = 0, shippingCharge = shipping(shipping);
+            for (MapResponse cartItem : cartItems) {
+                long itemId = cartItem.getLong("item_id");
+                int quantity = cartItem.getInt("quantity");
+                double price = cartItem.getDouble("price");
+                if (!StockTransaction.isAvailable(itemId, quantity)) {
+                    return MapResponse.failure("Insufficient Stock");
                 }
+                totalPrice += price * quantity;
             }
-            StockTransaction.minusStock(itemId, quantity, StockLedgerType.SALES);
+            double purchaseWallet = Handler.getDouble("Select Purchase_Wallet From Distributors Where Id = ?", userid);
+            if (purchaseWallet < (totalPrice + shippingCharge)) {
+                return MapResponse.failure("Insufficient funds.");
+            } else {
+                PurchaseWalletFlow.minus(userid, totalPrice + shippingCharge, PurchaseWalletTransactionType.PURCHASE);
+            }
+            boolean isTn = Objects.equals(params.getShippingState(), "Tamil Nadu");
+            Long currentCutoffId = Cutoff.getCurrentId();
+            SaleOrder saleOrder = new SaleOrder(
+                    params,
+                    time,
+                    userid,
+                    currentCutoffId,
+                    shippingCharge,
+                    isTn);
+
+            if (!saleOrder.insert()) {
+                return MapResponse.failure("Try again");
+            }
+
+            long saleOrderId = saleOrder.getLongId();
+            double totalPv = 0;
+
+            for (MapResponse cartItem : cartItems) {
+                long itemId = cartItem.getLong("item_id");
+                Long comboId = cartItem.getLong("combo_id");
+                double mrp = cartItem.getDouble("mrp");
+                double price = cartItem.getDouble("price");
+                double cost = cartItem.getDouble("cost");
+                int gstPercent = cartItem.getInt("gst_percent");
+                double pv = cartItem.getDouble("pv");
+                int quantity = cartItem.getInt("quantity");
+                totalPv += pv * quantity;
+                for (int i = 0; i < quantity; i++) {
+                    SaleOrderItem saleOrderItem = new SaleOrderItem(
+                            saleOrderId,
+                            itemId,
+                            comboId,
+                            mrp,
+                            price,
+                            cost,
+                            gstPercent,
+                            pv,
+                            isTn);
+                    if (!saleOrderItem.insert()) {
+                        return MapResponse.failure("Try again");
+                    }
+                }
+                StockTransaction.minusStock(itemId, quantity, StockLedgerType.SALES);
+            }
+            if (totalPv > 0) {
+                GenealogyUtil.addPv(userid, totalPv);
+            }
+            CartTransaction.clearCart();
+
+            String name = UserUtil.getFirstname();
+            String email = UserUtil.getEmail();
+
+            String htmlContent = String.format(
+                    "<html> <head> <title>Order Placed Successfully</title></head> <body>"
+                            + "<p>Dear %s,</p>"
+                            + "<p>Thank you for placing your order with us. We have received your request and are currently processing it.</p>"
+                            + "<p>Your order ID is <strong>%d</strong>.</p>"
+                            + "<p>Once your order is shipped, we will notify you with the tracking details.</p>"
+                            + "<p>If you have any further questions, please do not hesitate to contact our support team.</p>"
+                            + "<p>Thank you for choosing us. We look forward to serving you again!</p>"
+                            + "<p>Best regards,<br>Victory World Team</p>",
+                    name, saleOrderId);
+
+            MailUtil.sendMailAsync(
+                    MailSenderFrom.noReply(),
+                    email,
+                    "Order Placed Successfully",
+                    htmlContent,
+                    true);
+            return MapResponse.success();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return MapResponse.failure("Unable to place order");
         }
-        if (totalPv > 0) {
-            GenealogyUtil.addPv(userid, totalPv);
-        }
-        CartTransaction.clearCart();
-
-        String name = UserUtil.getFirstname();
-        String email = UserUtil.getEmail();
-
-        String htmlContent = String.format(
-                "<html> <head> <title>Order Placed Successfully</title></head> <body>"
-                        + "<p>Dear %s,</p>"
-                        + "<p>Thank you for placing your order with us. We have received your request and are currently processing it.</p>"
-                        + "<p>Your order ID is <strong>%d</strong>.</p>"
-                        + "<p>Once your order is shipped, we will notify you with the tracking details.</p>"
-                        + "<p>If you have any further questions, please do not hesitate to contact our support team.</p>"
-                        + "<p>Thank you for choosing us. We look forward to serving you again!</p>"
-                        + "<p>Best regards,<br>Victory World Team</p>",
-                name, saleOrderId);
-
-        MailUtil.sendMailAsync(
-                MailSenderFrom.noReply(),
-                email,
-                "Order Placed Successfully",
-                htmlContent,
-                true);
-        return MapResponse.success();
     }
 
     private static void constructParam(OrderParams params, Address shippingAddress, Address billingAddress) {
@@ -170,16 +179,18 @@ public class PurchaseTransaction {
      * @return Array of Shipping and Billing Address
      */
     private static Address[] getAddresses(long userId, long addressId) {
-        List<Address> addresses = Address.find("Distributor_Id = ? And (Id = ? Or Is_Default)",
-                userId, addressId).limit(2).orderBy("is_default");
-        if (addresses.size() == 1) {
-            Address address = addresses.get(0);
-            return new Address[] { address, address };
-        } else {
-            Address billingAddress = addresses.get(0);
-            Address shippingAddress = addresses.get(1);
-            return new Address[] { shippingAddress, billingAddress };
+        Address shippingAddress = Address.findFirst("Distributor_Id = ? And Id = ?", userId, addressId);
+        Address billingAddress = Address.findFirst("Distributor_Id = ? And Is_Default", userId);
+        if (shippingAddress == null) {
+            shippingAddress = billingAddress;
         }
+        if (billingAddress == null) {
+            billingAddress = shippingAddress;
+        }
+        if (shippingAddress == null || billingAddress == null) {
+            return new Address[0];
+        }
+        return new Address[] { shippingAddress, billingAddress };
     }
 
     public static double shipping(boolean shipping) {

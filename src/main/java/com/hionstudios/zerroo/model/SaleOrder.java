@@ -16,11 +16,12 @@ public class SaleOrder extends Model {
             OrderParams params,
             long time,
             long userid,
-            long cutoff,
+            Long cutoff,
             double shipping,
             boolean isTn) {
-        set("order_id", getOrderId());
-        set("branch_id", Branch.getIdFromGstin(Branch.GSTIN_TAMIL_NADU));
+        long branchId = Branch.getDefaultId();
+        set("order_id", getOrderId(branchId));
+        set("branch_id", branchId);
         set("billing_firstname", params.billingFirstName);
         set("billing_lastname", params.billingLastName);
         set("billing_address_1", params.billingAddress1);
@@ -69,10 +70,9 @@ public class SaleOrder extends Model {
         set("shipping_sac", Constants.SHIPPING_SAC);
     }
 
-    private String getOrderId() {
+    private String getOrderId(long branchId) {
         DecimalFormat saleOrderFormater = new DecimalFormat("SO/" + Constants.FY + "/00000");
-        long count = SaleOrder.count("Branch_Id = ?",
-                Branch.getIdFromGstin(Branch.GSTIN_TAMIL_NADU));
+        long count = SaleOrder.count("Branch_Id = ?", branchId);
 
         return saleOrderFormater.format(count + 1);
     }

@@ -1,7 +1,10 @@
 package com.hionstudios.iam;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.hionstudios.MapResponse;
 import com.hionstudios.db.Handler;
@@ -16,7 +19,72 @@ public class UserUtil {
 
     public static HionUserDetails getUserDetails() {
         Object principal = getPrincipal();
-        return (principal instanceof HionUserDetails) ? (HionUserDetails) principal : new HionUserDetails();
+        if (principal instanceof HionUserDetails) {
+            return (HionUserDetails) principal;
+        }
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            return loadUserDetails(username);
+        }
+        if (principal instanceof String) {
+            return loadUserDetails((String) principal);
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            if (username != null && !"anonymousUser".equalsIgnoreCase(username)) {
+                return loadUserDetails(username);
+            }
+        }
+
+        HionUserDetails requestUser = getUserDetailsFromRequest();
+        if (requestUser != null) {
+            return requestUser;
+        }
+        return new HionUserDetails();
+    }
+
+    private static HionUserDetails getUserDetailsFromRequest() {
+        try {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                    .getRequestAttributes();
+            if (requestAttributes == null || requestAttributes.getRequest() == null) {
+                return null;
+            }
+            javax.servlet.http.HttpServletRequest request = requestAttributes.getRequest();
+            String token = request.getHeader("Authorization");
+            if (token != null && token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            } else {
+                token = null;
+                if (request.getCookies() != null) {
+                    for (javax.servlet.http.Cookie cookie : request.getCookies()) {
+                        if ("auth".equals(cookie.getName())) {
+                            token = cookie.getValue();
+                            break;
+                        }
+                    }
+                }
+            }
+            if (token == null || token.trim().isEmpty()) {
+                return null;
+            }
+            String username = new JwtTokenUtil().getUsernameFromToken(token);
+            return loadUserDetails(username);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    private static HionUserDetails loadUserDetails(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return new HionUserDetails();
+        }
+        try {
+            return new HionUserDetailsService().loadUserByUsername(username.trim());
+        } catch (Exception ignored) {
+            return new HionUserDetails();
+        }
     }
 
     public static boolean isLoggedIn() {
@@ -43,7 +111,20 @@ public class UserUtil {
     }
 
     public static long getUserid() {
-        return getUserDetails().getUserid();
+        HionUserDetails userDetails = getUserDetails();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("USERUTIL userid auth="
+                + (authentication == null ? "null" : authentication.getClass().getName())
+                + " principal="
+                + (authentication == null || authentication.getPrincipal() == null
+                        ? "null"
+                        : authentication.getPrincipal().getClass().getName())
+                + " name="
+                + (authentication == null ? "null" : authentication.getName())
+                + " resolved=" + userDetails.getUserid()
+                + " type=" + userDetails.getType()
+                + " username=" + userDetails.getUsername());
+        return userDetails.getUserid();
     }
 
     public static String getUsername() {

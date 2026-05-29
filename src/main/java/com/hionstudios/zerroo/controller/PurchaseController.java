@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hionstudios.MapResponse;
 import com.hionstudios.db.DbTransaction;
+import com.hionstudios.iam.IsAuthenticatedUser;
 import com.hionstudios.iam.IsDistributor;
 import com.hionstudios.zerroo.flow.sale.InvoiceTransaction;
 import com.hionstudios.zerroo.flow.sale.PurchaseTransaction;
@@ -17,19 +18,19 @@ import com.hionstudios.zerroo.flow.sale.PurchaseTransaction;
 @RequestMapping("api/purchases")
 public class PurchaseController {
     @GetMapping("shipping")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> shipping() {
         return ResponseEntity.ok(MapResponse.success().put("shipping_charge", PurchaseTransaction.shipping(true)));
     }
 
     @GetMapping
-    @IsDistributor
+    @IsAuthenticatedUser
     public synchronized ResponseEntity<MapResponse> purchases() {
         return ((DbTransaction) () -> new PurchaseTransaction().purchases()).read();
     }
 
     @PostMapping
-    @IsDistributor
+    @IsAuthenticatedUser
     public synchronized ResponseEntity<MapResponse> purchase(
             @RequestParam long address,
             @RequestParam boolean shipping) {
@@ -38,7 +39,7 @@ public class PurchaseController {
     }
 
     @GetMapping("download")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<byte[]> downloadInvoice(@RequestParam long[] invoice_id) {
         return new InvoiceTransaction().downloadInvoice(invoice_id);
     }

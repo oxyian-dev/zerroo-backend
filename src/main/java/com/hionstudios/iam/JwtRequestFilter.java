@@ -46,50 +46,65 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             @NotNull HttpServletResponse response,
             @NotNull FilterChain chain) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
-        String username = null;
-        String jwtToken = null;
         long expiry = TimeUtil.currentTime();
+
+        // Prefer explicit Authorization header so each frontend context
+        // (admin/distributor) can select the correct token even when auth cookie exists.
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String jwtToken = authHeader.substring(7);
+            if (authenticateToken(request, response, chain, jwtToken, expiry)) {
+                return;
+            }
+        }
+
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("auth")) {
-                    jwtToken = cookie.getValue();
-                    if (jwtTokenUtil.getExpirationDateFromToken(jwtToken).getTime() > expiry) {
-                        username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                    if (authenticateToken(request, response, chain, cookie.getValue(), expiry)) {
+                        return;
                     }
                 }
             }
         }
-        if (username == null) {
-            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                jwtToken = authHeader.substring(7);
-                if (jwtTokenUtil.getExpirationDateFromToken(jwtToken).getTime() > expiry) {
-                    username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                }
+        chain.doFilter(request, response);
+    }
+
+    private boolean authenticateToken(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain,
+            String jwtToken,
+            long expiry) throws IOException, ServletException {
+        try {
+            if (jwtTokenUtil.getExpirationDateFromToken(jwtToken).getTime() <= expiry) {
+                return false;
             }
-        }
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+            if (username == null) {
+                return false;
+            }
 
             HionUserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-
-            // if token is valid configure Spring Security to manually set
-            // authentication
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                WebAuthenticationDetails authenticationDetails = new WebAuthenticationDetailsSource()
-                        .buildDetails(request);
-                authenticationToken.setDetails(authenticationDetails);
-                // After setting the Authentication in the context, we specify
-                // that the current user is authenticated. So it passes the
-                // Spring Security Configurations successfully.
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                if (jwtTokenUtil.checkThreshold(jwtToken)) {
-                    JwtResponse jwtResponse = authenticator.construct(userDetails);
-                    response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader(request));
-                }
+            if (!jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                return false;
             }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+            WebAuthenticationDetails authenticationDetails = new WebAuthenticationDetailsSource()
+                    .buildDetails(request);
+            authenticationToken.setDetails(authenticationDetails);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            System.out.println("JWT AUTH SET principal=" + authenticationToken.getPrincipal().getClass().getName()
+                    + " name=" + authenticationToken.getName());
+            if (jwtTokenUtil.checkThreshold(jwtToken)) {
+                JwtResponse jwtResponse = authenticator.construct(userDetails);
+                response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader(request));
+            }
+            chain.doFilter(request, response);
+            return true;
+        } catch (Exception ignored) {
+            return false;
         }
-        chain.doFilter(request, response);
     }
 }

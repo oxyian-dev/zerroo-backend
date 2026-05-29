@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hionstudios.MapResponse;
 import com.hionstudios.db.DbTransaction;
+import com.hionstudios.iam.IsAuthenticatedUser;
 import com.hionstudios.iam.IsDistributor;
 import com.hionstudios.zerroo.flow.AddressTransaction;
 
@@ -19,19 +20,19 @@ import com.hionstudios.zerroo.flow.AddressTransaction;
 @RequestMapping("api/addresses")
 public class AddressController {
     @GetMapping
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> view() {
         return ((DbTransaction) () -> new AddressTransaction().view()).read();
     }
 
     @GetMapping("{id}")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> view(@PathVariable long id) {
         return ((DbTransaction) () -> new AddressTransaction().view(id)).read();
     }
 
     @PostMapping
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> add(
             @RequestParam String saved_name,
             @RequestParam String firstname,
@@ -63,7 +64,7 @@ public class AddressController {
     }
 
     @PutMapping("{id}")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> edit(
             @PathVariable long id,
             @RequestParam String saved_name,
@@ -96,13 +97,13 @@ public class AddressController {
     }
 
     @PutMapping("{id}/default")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> makeDefault(@PathVariable long id) {
         return ((DbTransaction) () -> new AddressTransaction().makeDefault(id)).write();
     }
 
     @DeleteMapping("{id}")
-    @IsDistributor
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> delete(@PathVariable long id) {
         return ((DbTransaction) () -> new AddressTransaction().delete(id)).write();
     }

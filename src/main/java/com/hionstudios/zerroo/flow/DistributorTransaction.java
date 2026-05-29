@@ -43,24 +43,25 @@ public class DistributorTransaction {
                 columns);
     }
 
-    public MapResponse genealogy(String username) {
-        String currentUsername = UserUtil.getUsername();
+    public MapResponse genealogy(String currentUsername, String username) {
+        String targetUsername = username == null || username.trim().isEmpty() ? currentUsername : username.trim();
 
-        long userid = UserUtil.getUserid();
-        if (username == null) {
-            username = currentUsername;
-        } else if (new GenealogyUtil().isDownLine(currentUsername, username)) {
+        if (targetUsername == null || targetUsername.isEmpty()) {
+            return MapResponse.failure("User not found");
+        }
+        if (username != null && new GenealogyUtil().isDownLine(currentUsername, targetUsername)) {
             return MapResponse.failure("This id is not in your Genealogy");
         }
 
-        if (username != null) {
-            userid = UserUtil.getIdFromUsername(username);
+        Long userId = UserUtil.getIdFromUsername(targetUsername);
+        if (userId == null) {
+            return MapResponse.failure("User not found");
         }
 
         String sql = "With Recursive Genealogy As (Select Users.Id, Users.Username, Users.Firstname, Users.Lastname, Users.Avatar, Users.Phone, Distributors.Left_Id, Distributors.Right_Id, Distributors.Total_Left_Pv, Distributors.Carry_Left_Pv, Distributors.Cutoff_Left_Pv, Distributors.Total_Right_Pv, Distributors.Carry_Right_Pv, Distributors.Cutoff_Right_Pv, Distributors.Total_Left_Pv, Distributors.Carry_Left_Pv, Distributors.Cutoff_Left_Pv, Distributors.Total_Right_Pv, Distributors.Carry_Right_Pv, Distributors.Cutoff_Right_Pv, 0 as Level, Distributors.Self_Pv, Distributors.Self_Pv, Distributors.Rank_Id From Distributors Join Users On Users.Id = Distributors.Id Where Users.Username = ? Union All Select Downline.Id, Users.Username, Users.FirstName, Users.Lastname, Users.Avatar, Users.Phone, Downline.Left_Id, Downline.Right_Id, Downline.Total_Left_Pv, Downline.Carry_Left_Pv, Downline.Cutoff_Left_Pv, Downline.Total_Right_Pv, Downline.Carry_Right_Pv, Downline.Cutoff_Right_Pv, Downline.Total_Left_Pv, Downline.Carry_Left_Pv, Downline.Cutoff_Left_Pv, Downline.Total_Right_Pv, Downline.Carry_Right_Pv, Downline.Cutoff_Right_Pv, Genealogy.Level + 1 As Level, Downline.Self_Pv, Downline.Self_Pv, Downline.Rank_Id From Distributors Downline Join Users On Users.Id = Downline.Id Join Genealogy On Genealogy.Id = Downline.Parent_Id Where Genealogy.Level < 3) Select Genealogy.*, Ranks.Rank From Genealogy Left Join Ranks On Ranks.Id = Genealogy.Rank_Id";
 
         MapResponse resposne = MapResponse.success();
-        resposne.put("genealogy", Handler.toJson(sql, "id", username).put("id", userid));
+        resposne.put("genealogy", Handler.toJson(sql, "id", targetUsername).put("id", userId));
         return resposne;
     }
 
@@ -108,10 +109,8 @@ public class DistributorTransaction {
         return response;
     }
 
-    public MapResponse dashboard() {
+    public MapResponse dashboard(long userid) {
         String sql = "Select Ranks.Rank, Distributors.Self_Pv, Distributors.Sp_Pv, Distributors.Total_Income, Distributors.Pair_Match_Income, Distributors.Sp_Income, Distributors.Income_Wallet, Distributors.Purchase_Wallet, Distributors.Cutoff_Left_Pv, Distributors.Cutoff_Right_Pv, Distributors.Carry_Left_Pv, Distributors.Carry_Right_Pv, Distributors.Total_Left_Pv, Distributors.Total_Right_Pv, (Select Count(*) From Distributors Where Distributors.Referer_Id = ?) Direct_Members, (Select Sum(Sale_Order_Items.Price) + Sale_Orders.Shipping_Fee Price From Sale_Order_Items Join Sale_Orders On Sale_Orders.Id = Sale_Order_Items.Order_Id And Sale_Orders.User_Id = Distributors.Id Group By Sale_Orders.Shipping_Fee) Total_Purchase, Users.Created_Time From Distributors Join Users On Users.Id = Distributors.Id Left Join Ranks On Ranks.Id = Distributors.Rank_Id Where Distributors.Id = ?";
-
-        long userid = UserUtil.getUserid();
         return Handler.findFirst(sql, userid, userid);
     }
 
@@ -135,6 +134,9 @@ public class DistributorTransaction {
         long userid = UserUtil.getUserid();
 
         Distributor distributor = Distributor.findById(userid);
+        if (distributor == null) {
+            return MapResponse.failure("Distributor record not found for this user");
+        }
         distributor.set("declaration_status", declaration_status);
         
 

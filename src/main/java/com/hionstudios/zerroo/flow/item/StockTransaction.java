@@ -271,6 +271,7 @@ public class StockTransaction {
 
     public static boolean isAvailable(long item, int quantity) {
         String sql = "Select Sum(Quantity)::Int From Stocks Where Item_Id = ? And Inventory_Id = ?";
-        return Handler.getInt(sql, item, Inventory.getDefaultInventory()) >= quantity;
+        Integer available = Handler.getInt(sql, item, Inventory.getDefaultInventory());
+        return available != null && available >= quantity;
     }
 }

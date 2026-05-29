@@ -86,7 +86,8 @@ public class CutoffTransaction {
     }
 
     public static long getCurrentCutoffId() {
-        return getCurrentCutoff().getLongId();
+        Cutoff cutoff = getCurrentCutoff();
+        return cutoff == null ? 0 : cutoff.getLongId();
     }
 
     /**
@@ -98,41 +99,54 @@ public class CutoffTransaction {
      * @return
      */
     public MapResponse initiate() {
-        String criteria = "(Distributors.Cutoff_Self_Pv != ? Or Distributors.Cutoff_Left_Pv != ? Or Distributors.Cutoff_Right_Pv != ?) And Distributors.Active";
-        long time = TimeUtil.currentTime();
-        long userid = UserUtil.getUserid();
+        try {
+            String criteria = "(Distributors.Cutoff_Self_Pv != ? Or Distributors.Cutoff_Left_Pv != ? Or Distributors.Cutoff_Right_Pv != ?) And Distributors.Active";
+            long time = TimeUtil.currentTime();
+            long userid = UserUtil.getUserid();
 
-        Cutoff cutoff = getCurrentCutoff();
-        long cutoffId = cutoff.getLongId();
-        Distributor.findWith((model) -> {
-            Distributor distributor = (Distributor) model;
-            IncomeCalculator.pairMatchIncome(distributor, cutoffId);
-            new CutoffEntry(distributor, cutoffId).insert();
+            Cutoff cutoff = getCurrentCutoff();
+            if (cutoff == null) {
+                int statusId = CutoffStatus.getId(CutoffStatus.PENDING);
+                cutoff = new Cutoff(1, statusId, time);
+                if (!cutoff.insert()) {
+                    return MapResponse.failure("Unable to initiate cutoff");
+                }
+            }
 
-            distributor.set("cutoff_self_pv", 0);
-            distributor.set("cutoff_left_pv", 0);
-            distributor.set("cutoff_right_pv", 0);
+            long cutoffId = cutoff.getLongId();
+            Distributor.findWith((model) -> {
+                Distributor distributor = (Distributor) model;
+                IncomeCalculator.pairMatchIncome(distributor, cutoffId);
+                new CutoffEntry(distributor, cutoffId).insert();
 
-            distributor.saveIt();
-        }, criteria, 0, 0, 0);
+                distributor.set("cutoff_self_pv", 0);
+                distributor.set("cutoff_left_pv", 0);
+                distributor.set("cutoff_right_pv", 0);
 
-        Distributor.update("Cutoff_Sp_Pv = ?", "Active = ?", 0, true);
+                distributor.saveIt();
+            }, criteria, 0, 0, 0);
 
-        cutoff.set("status_id", CutoffStatus.getId(CutoffStatus.INITIATED));
-        cutoff.set("initiated_time", time);
-        cutoff.set("initiated_by", userid);
-        if (!cutoff.saveIt()) {
-            return MapResponse.failure("Try again");
+            Distributor.update("Cutoff_Sp_Pv = ?", "Active = ?", 0, true);
+
+            cutoff.set("status_id", CutoffStatus.getId(CutoffStatus.INITIATED));
+            cutoff.set("initiated_time", time);
+            cutoff.set("initiated_by", userid);
+            if (!cutoff.saveIt()) {
+                return MapResponse.failure("Unable to initiate cutoff");
+            }
+            washout();
+            int nextCutoffNumber = cutoff.getInteger("cutoff_number") + 1;
+            int statusId = CutoffStatus.getId(CutoffStatus.PENDING);
+            if (!new Cutoff(nextCutoffNumber, statusId, time).insert()) {
+                return MapResponse.failure("Unable to create next cutoff");
+            }
+            MapResponse response = MapResponse.success();
+            response.put("id", cutoffId);
+            return response;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return MapResponse.failure("Unable to initiate cutoff");
         }
-        washout();
-        int nextCutoffNumber = cutoff.getInteger("cutoff_number") + 1;
-        int statusId = CutoffStatus.getId(CutoffStatus.PENDING);
-        if (!new Cutoff(nextCutoffNumber, statusId, time).insert()) {
-            return MapResponse.failure();
-        }
-        MapResponse response = MapResponse.success();
-        response.put("id", cutoffId);
-        return response;
     }
 
     private static void washout() {

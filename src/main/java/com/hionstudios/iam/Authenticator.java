@@ -44,8 +44,10 @@ public class Authenticator {
             return ResponseEntity.badRequest().body(MapResponse.failure());
         }
         JwtResponse jwtResponse = construct(userDetails);
+        response.addHeader(HttpHeaders.SET_COOKIE, JwtResponse.toHostCookieDeletionHeader(request));
         response.addHeader(HttpHeaders.SET_COOKIE, jwtResponse.toCookieHeader(request));
         MapResponse newResponse = MapResponse.success();
+        newResponse.put("token", jwtResponse.getJwt());
         newResponse.put("firstname", userDetails.getFirstame());
         newResponse.put("lastname", userDetails.getLastame());
         newResponse.put("phone", userDetails.getPhone());

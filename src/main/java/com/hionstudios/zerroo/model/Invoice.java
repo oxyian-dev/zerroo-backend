@@ -13,11 +13,12 @@ public class Invoice extends Model {
     }
 
     public Invoice(MapResponse order, SaleOrder saleOrder) {
-        set("branch_id", saleOrder.get("branch_id"));
+        long branchId = saleOrder.getLong("branch_id");
+        set("branch_id", branchId);
         set("cutoff_id", saleOrder.get("cutoff_id"));
         set("user_id", saleOrder.get("user_id"));
         set("user_id", saleOrder.get("user_id"));
-        set("invoice_id", getInvoiceId());
+        set("invoice_id", getInvoiceId(branchId));
         set("billing_firstname", saleOrder.get("billing_firstname"));
         set("billing_lastname", saleOrder.get("billing_lastname"));
         set("billing_email", saleOrder.get("billing_email"));
@@ -56,10 +57,9 @@ public class Invoice extends Model {
         set("time", TimeUtil.currentTime());
     }
 
-    private String getInvoiceId() {
+    private String getInvoiceId(long branchId) {
         DecimalFormat invoiceFormater = new DecimalFormat("INV/" + Constants.FY + "/00000");
-        long count = Invoice.count("fy = ? And Branch_Id = ?", Constants.FY,
-                Branch.getIdFromGstin(Branch.GSTIN_TAMIL_NADU));
+        long count = Invoice.count("fy = ? And Branch_Id = ?", Constants.FY, branchId);
         return invoiceFormater.format(count + 1);
     }
 }
