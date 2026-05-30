@@ -1286,3 +1286,26 @@
 127.0.0.1 - - [30/May/2026:06:12:22 +0000] "GET /api/admin/users/distributors?search=VC00001 HTTP/1.1" 200 769
 127.0.0.1 - - [30/May/2026:06:12:28 +0000] "GET /api/invoices HTTP/1.1" 200 311
 127.0.0.1 - - [30/May/2026:06:12:33 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 200 48473
+127.0.0.1 - - [30/May/2026:06:16:57 +0000] "GET /api/invoices HTTP/1.1" 200 311
+127.0.0.1 - - [30/May/2026:06:17:33 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 404 -
+127.0.0.1 - - [30/May/2026:06:17:38 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 404 -
+127.0.0.1 - - [30/May/2026:06:17:43 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 404 -
+127.0.0.1 - - [30/May/2026:06:18:26 +0000] "GET /api/invoices HTTP/1.1" 200 311
+127.0.0.1 - - [30/May/2026:06:18:31 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 200 48205
+127.0.0.1 - - [30/May/2026:06:19:21 +0000] "GET /api/invoices/pdf?ids=1 HTTP/1.1" 200 48205
+205.210.31.143 - - [30/May/2026:06:34:01 +0000] "-" 400 435
+205.210.31.143 - - [30/May/2026:06:34:01 +0000] "-" 400 435
+127.0.0.1 - - [30/May/2026:06:35:14 +0000] "GET /api/admin/dashboard HTTP/1.1" 200 201
+127.0.0.1 - - [30/May/2026:06:35:18 +0000] "GET /api/shipments/count HTTP/1.1" 200 60
+127.0.0.1 - - [30/May/2026:06:35:21 +0000] "GET /api/shipments/status/pending HTTP/1.1" 200 302
+127.0.0.1 - - [30/May/2026:06:35:25 +0000] "GET /api/shipments/1 HTTP/1.1" 200 113
+127.0.0.1 - - [30/May/2026:06:35:25 +0000] "GET /api/select/transporter HTTP/1.1" 200 93
+127.0.0.1 - - [30/May/2026:06:35:25 +0000] "GET /api/select/courier HTTP/1.1" 200 61
+127.0.0.1 - - [30/May/2026:06:35:34 +0000] "GET /api/ui/featured HTTP/1.1" 200 145
+127.0.0.1 - - [30/May/2026:06:35:34 +0000] "GET /api/brands HTTP/1.1" 200 193
+127.0.0.1 - - [30/May/2026:06:35:34 +0000] "GET /api/ui/nav/categories HTTP/1.1" 200 157
+127.0.0.1 - - [30/May/2026:06:35:38 +0000] "POST /authenticate HTTP/1.1" 200 337
+127.0.0.1 - - [30/May/2026:06:35:39 +0000] "GET /api/distributors/declaration-status HTTP/1.1" 200 74
+127.0.0.1 - - [30/May/2026:06:35:39 +0000] "GET /api/distributors/dashboard HTTP/1.1" 200 410
+127.0.0.1 - - [30/May/2026:06:35:40 +0000] "GET /api/transactions/income?filterColumn=Type&filterOperator=not&filterValue=Payout HTTP/1.1" 200 230
+176.65.139.204 - - [30/May/2026:06:37:43 +0000] "GET /login HTTP/1.1" 500 144
