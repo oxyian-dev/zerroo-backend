@@ -142,7 +142,7 @@ public class PayoutTransaction {
     }
 
     public MapResponse initiate() {
-        String sql = "Select Distributors.Id Distributor_Id, Distributors.Income_Wallet, Kyc_Verifications.Pan_Firstname Firstname, Kyc_Verifications.Pan_Lastname Lastname, Bank_Verifications.Bank, Bank_Verifications.Branch, Bank_Verifications.Ifsc, Bank_Verifications.Account_No From Distributors Join Kyc_Verification_Statuses On Kyc_Verification_Statuses.Id = Distributors.Kyc_Status_Id And Kyc_Verification_Statuses.Status = ? Join Bank_Verification_Statuses On Bank_Verification_Statuses.Id = Distributors.Bank_Status_Id And Bank_Verification_Statuses.Status = ? Join Kyc_Verifications On Kyc_Verifications.Id = Distributors.Kyc_Verification_Id Join Bank_Verifications On Bank_Verifications.Id = Distributors.Bank_Verification_Id Where Distributors.Income_Wallet >= ?";
+        String sql = "Select Distributors.Id Distributor_Id, (Select Coalesce(Sum(Income_Wallet_Transactions.Actual_Amount), 0) From Income_Wallet_Transactions Where Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Income_Wallet, Kyc_Verifications.Pan_Firstname Firstname, Kyc_Verifications.Pan_Lastname Lastname, Bank_Verifications.Bank, Bank_Verifications.Branch, Bank_Verifications.Ifsc, Bank_Verifications.Account_No From Distributors Join Kyc_Verification_Statuses On Kyc_Verification_Statuses.Id = Distributors.Kyc_Status_Id And Kyc_Verification_Statuses.Status = ? Join Bank_Verification_Statuses On Bank_Verification_Statuses.Id = Distributors.Bank_Status_Id And Bank_Verification_Statuses.Status = ? Join Kyc_Verifications On Kyc_Verifications.Id = Distributors.Kyc_Verification_Id Join Bank_Verifications On Bank_Verifications.Id = Distributors.Bank_Verification_Id Where (Select Coalesce(Sum(Income_Wallet_Transactions.Actual_Amount), 0) From Income_Wallet_Transactions Where Income_Wallet_Transactions.Distributor_Id = Distributors.Id) >= ?";
 
         Payout payout = new Payout();
         payout.insert();
@@ -159,8 +159,6 @@ public class PayoutTransaction {
                             double amount = ((BigDecimal) row.get("income_wallet")).doubleValue();
                             IncomeTransaction.addIncome(distributor, -amount,
                                     IncomeWalletTransactionType.PAYOUT);
-                            distributor.set("income_wallet", 0);
-                            distributor.saveIt();
                         }
                     }
                 });

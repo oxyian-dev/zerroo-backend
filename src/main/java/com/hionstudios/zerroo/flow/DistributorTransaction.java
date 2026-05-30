@@ -13,6 +13,8 @@ import com.hionstudios.security.Generator;
 import com.hionstudios.zerroo.mail.MailSenderFrom;
 import com.hionstudios.zerroo.mail.MailUtil;
 import com.hionstudios.zerroo.model.Distributor;
+import com.hionstudios.zerroo.model.IncomeWalletTransactionType;
+import com.hionstudios.zerroo.model.CutoffStatus;
 import com.hionstudios.zerroo.model.User;
 
 public class DistributorTransaction {
@@ -110,8 +112,18 @@ public class DistributorTransaction {
     }
 
     public MapResponse dashboard(long userid) {
-        String sql = "Select Ranks.Rank, Distributors.Self_Pv, Distributors.Sp_Pv, Distributors.Total_Income, Distributors.Pair_Match_Income, Distributors.Sp_Income, Distributors.Income_Wallet, Distributors.Purchase_Wallet, Distributors.Cutoff_Left_Pv, Distributors.Cutoff_Right_Pv, Distributors.Carry_Left_Pv, Distributors.Carry_Right_Pv, Distributors.Total_Left_Pv, Distributors.Total_Right_Pv, (Select Count(*) From Distributors Where Distributors.Referer_Id = ?) Direct_Members, (Select Sum(Sale_Order_Items.Price) + Sale_Orders.Shipping_Fee Price From Sale_Order_Items Join Sale_Orders On Sale_Orders.Id = Sale_Order_Items.Order_Id And Sale_Orders.User_Id = Distributors.Id Group By Sale_Orders.Shipping_Fee) Total_Purchase, Users.Created_Time From Distributors Join Users On Users.Id = Distributors.Id Left Join Ranks On Ranks.Id = Distributors.Rank_Id Where Distributors.Id = ?";
-        return Handler.findFirst(sql, userid, userid);
+        String sql = "With LatestCutoff As (Select Created_Time, Initiated_Time From Cutoffs Join Cutoff_Statuses On Cutoff_Statuses.Id = Cutoffs.Status_Id And Cutoff_Statuses.Status = ? Order By Cutoffs.Id Desc Limit 1) Select Ranks.Rank, Distributors.Self_Pv, Distributors.Sp_Pv, (Select Coalesce(Sum(Income_Wallet_Transactions.Full_Amount), 0) From Income_Wallet_Transactions Join Income_Wallet_Transaction_Types On Income_Wallet_Transaction_Types.Id = Income_Wallet_Transactions.Type_Id And Income_Wallet_Transaction_Types.Type In (?, ?, ?) And Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Total_Income, (Select Coalesce(Sum(Income_Wallet_Transactions.Full_Amount), 0) From Income_Wallet_Transactions Join Income_Wallet_Transaction_Types On Income_Wallet_Transaction_Types.Id = Income_Wallet_Transactions.Type_Id And Income_Wallet_Transaction_Types.Type = ? And Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Pair_Match_Income, (Select Coalesce(Sum(Income_Wallet_Transactions.Full_Amount), 0) From Income_Wallet_Transactions Join Income_Wallet_Transaction_Types On Income_Wallet_Transaction_Types.Id = Income_Wallet_Transactions.Type_Id And Income_Wallet_Transaction_Types.Type = ? And Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Pair_Match_Income_Lifetime, (Select Coalesce(Sum(Income_Wallet_Transactions.Full_Amount), 0) From Income_Wallet_Transactions Join Income_Wallet_Transaction_Types On Income_Wallet_Transaction_Types.Id = Income_Wallet_Transactions.Type_Id And Income_Wallet_Transaction_Types.Type = ? And LatestCutoff.Created_Time Is Not Null And Income_Wallet_Transactions.Distributor_Id = Distributors.Id And Income_Wallet_Transactions.Time Between LatestCutoff.Created_Time And LatestCutoff.Initiated_Time) Current_Cutoff_Pair_Income, (Select Coalesce(Sum(Income_Wallet_Transactions.Full_Amount), 0) From Income_Wallet_Transactions Join Income_Wallet_Transaction_Types On Income_Wallet_Transaction_Types.Id = Income_Wallet_Transactions.Type_Id And Income_Wallet_Transaction_Types.Type = ? And Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Sp_Income, (Select Coalesce(Sum(Income_Wallet_Transactions.Actual_Amount), 0) From Income_Wallet_Transactions Where Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Income_Wallet, Distributors.Purchase_Wallet, Distributors.Cutoff_Left_Pv, Distributors.Cutoff_Right_Pv, Distributors.Carry_Left_Pv, Distributors.Carry_Right_Pv, Distributors.Total_Left_Pv, Distributors.Total_Right_Pv, (Select Count(*) From Distributors Where Distributors.Referer_Id = ?) Direct_Members, (Select Sum(Sale_Order_Items.Price) + Sale_Orders.Shipping_Fee Price From Sale_Order_Items Join Sale_Orders On Sale_Orders.Id = Sale_Order_Items.Order_Id And Sale_Orders.User_Id = Distributors.Id Group By Sale_Orders.Shipping_Fee) Total_Purchase, Users.Created_Time From Distributors Join Users On Users.Id = Distributors.Id Left Join Ranks On Ranks.Id = Distributors.Rank_Id Left Join LatestCutoff On True Where Distributors.Id = ?";
+        return Handler.findFirst(sql,
+                CutoffStatus.INITIATED,
+                IncomeWalletTransactionType.PAIR_MATCH_INCOME,
+                IncomeWalletTransactionType.SELF_PURCHASE_INCOME,
+                IncomeWalletTransactionType.COMPANY,
+                IncomeWalletTransactionType.PAIR_MATCH_INCOME,
+                IncomeWalletTransactionType.PAIR_MATCH_INCOME,
+                IncomeWalletTransactionType.PAIR_MATCH_INCOME,
+                IncomeWalletTransactionType.SELF_PURCHASE_INCOME,
+                userid,
+                userid);
     }
 
     public MapResponse getName(long upline, String username) {

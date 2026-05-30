@@ -7,6 +7,7 @@ import org.javalite.activejdbc.RowListenerAdapter;
 import com.hionstudios.ListResponse;
 import com.hionstudios.db.Handler;
 import com.hionstudios.zerroo.Constants;
+import com.hionstudios.zerroo.flow.cutoff.DistributorFinancials;
 import com.hionstudios.zerroo.flow.cutoff.CutoffTransaction;
 import com.hionstudios.zerroo.flow.cutoff.IncomeCalculator;
 import com.hionstudios.zerroo.model.Distributor;
@@ -66,20 +67,21 @@ public class GenealogyUtil {
         if (addUplinePv[0] > 0) {
             Handler.findWith(GENEALOGY_QUERY, new Long[] { userid }, new RowListenerAdapter() {
                 @Override
-                public void onNext(Map<String, Object> downline) {
-                    long parent = (long) downline.get("parent_id");
-                    boolean placement = (boolean) downline.get("placement");
-                    if (placement) {
-                        Distributor.update(
+                    public void onNext(Map<String, Object> downline) {
+                        long parent = (long) downline.get("parent_id");
+                        boolean placement = (boolean) downline.get("placement");
+                        if (placement) {
+                            Distributor.update(
                                 "Cutoff_Left_Pv = Cutoff_Left_Pv + ?, Total_Left_Pv = Total_Left_Pv + ?",
                                 "Id = ? ", addUplinePv[0], addUplinePv[0], parent);
                     } else {
                         Distributor.update(
                                 "Cutoff_Right_Pv = Cutoff_Right_Pv + ?, Total_Right_Pv = Total_Right_Pv + ?",
                                 "Id = ?", addUplinePv[0], addUplinePv[0], parent);
+                        }
+                        DistributorFinancials.reconcileFinancialState(Distributor.findById(parent));
                     }
-                }
-            });
+                });
         }
     }
 }

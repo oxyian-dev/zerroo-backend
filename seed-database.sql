@@ -245,4 +245,83 @@ BEGIN
     END LOOP;
 END $$;
 
+CREATE OR REPLACE FUNCTION reconcile_distributor_financials()
+RETURNS trigger AS $$
+DECLARE
+    affected_distributor_id bigint := COALESCE(NEW.distributor_id, OLD.distributor_id);
+BEGIN
+    UPDATE distributors
+    SET
+        total_income = COALESCE((
+            SELECT SUM(t.full_amount)
+            FROM income_wallet_transactions t
+            JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+            WHERE t.distributor_id = affected_distributor_id
+              AND tt.type IN ('Pair Match Income', 'Sp Income', 'Company')
+        ), 0),
+        pair_match_income = COALESCE((
+            SELECT SUM(t.full_amount)
+            FROM income_wallet_transactions t
+            JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+            WHERE t.distributor_id = affected_distributor_id
+              AND tt.type = 'Pair Match Income'
+        ), 0),
+        sp_income = COALESCE((
+            SELECT SUM(t.full_amount)
+            FROM income_wallet_transactions t
+            JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+            WHERE t.distributor_id = affected_distributor_id
+              AND tt.type = 'Sp Income'
+        ), 0),
+        income_wallet = COALESCE((
+            SELECT SUM(t.actual_amount)
+            FROM income_wallet_transactions t
+            WHERE t.distributor_id = affected_distributor_id
+        ), 0)
+    WHERE id = affected_distributor_id;
+
+    RETURN COALESCE(NEW, OLD);
+END;
+$$ LANGUAGE plpgsql;
+
+DO $$
+BEGIN
+    BEGIN
+        EXECUTE 'DROP TRIGGER IF EXISTS trg_reconcile_distributor_financials ON income_wallet_transactions';
+        EXECUTE 'CREATE TRIGGER trg_reconcile_distributor_financials AFTER INSERT OR UPDATE OR DELETE ON income_wallet_transactions FOR EACH ROW EXECUTE FUNCTION reconcile_distributor_financials()';
+    EXCEPTION
+        WHEN insufficient_privilege THEN
+            RAISE NOTICE 'Skipping financial reconciliation trigger installation due to insufficient privileges.';
+    END;
+END $$;
+
+UPDATE distributors d
+SET
+    total_income = COALESCE((
+        SELECT SUM(t.full_amount)
+        FROM income_wallet_transactions t
+        JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+        WHERE t.distributor_id = d.id
+          AND tt.type IN ('Pair Match Income', 'Sp Income', 'Company')
+    ), 0),
+    pair_match_income = COALESCE((
+        SELECT SUM(t.full_amount)
+        FROM income_wallet_transactions t
+        JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+        WHERE t.distributor_id = d.id
+          AND tt.type = 'Pair Match Income'
+    ), 0),
+    sp_income = COALESCE((
+        SELECT SUM(t.full_amount)
+        FROM income_wallet_transactions t
+        JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
+        WHERE t.distributor_id = d.id
+          AND tt.type = 'Sp Income'
+    ), 0),
+    income_wallet = COALESCE((
+        SELECT SUM(t.actual_amount)
+        FROM income_wallet_transactions t
+        WHERE t.distributor_id = d.id
+    ), 0);
+
 COMMIT;
