@@ -20,7 +20,7 @@ import com.hionstudios.zerroo.model.SaleOrderShippingStatus;
 
 public class SaleOrderTransaction {
         public MapResponse saleOrders(DataGridParams params) {
-                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sale_Order_Shipping_Statuses.Status, Sum(Sale_Order_Items.Price) Price, Sale_Orders.Shipping_Fee \"Shipping Fee\", Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Users On Users.Id = Sale_Orders.User_Id";
+                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sale_Order_Shipping_Statuses.Status, Sum(Sale_Order_Items.Price) Price, Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Users On Users.Id = Sale_Orders.User_Id";
                 String count = "Select Count(*) From (Select Count(Distinct Sale_Orders.Id) From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Users On Users.Id = Sale_Orders.User_Id Group By Sale_Orders.Id) Count";
                 String[] columns = {
                                 "Time",
@@ -29,7 +29,6 @@ public class SaleOrderTransaction {
                                 "Customer",
                                 "Status",
                                 "Price",
-                                "Shipping Fee",
                                 "PV"
                 };
                 HashMap<String, String> mapping = new HashMap<>(3);
@@ -53,7 +52,7 @@ public class SaleOrderTransaction {
         }
 
         public MapResponse unShippedSaleOrders(DataGridParams params) {
-                String sql = "Select Sale_Orders.Id, Sale_Orders.Id \"Action\", Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sum(Sale_Order_Items.Price) Price, Sale_Orders.Shipping_Fee \"Shipping Fee\", Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id  Join Users On Users.Id = Sale_Orders.User_Id";
+                String sql = "Select Sale_Orders.Id, Sale_Orders.Id \"Action\", Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sum(Sale_Order_Items.Price) Price, Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id  Join Users On Users.Id = Sale_Orders.User_Id";
                 String count = "Select Count(Distinct Sale_Orders.Id) From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id  Join Users On Users.Id = Sale_Orders.User_Id";
                 String[] columns = {
                                 "Action",
@@ -62,7 +61,6 @@ public class SaleOrderTransaction {
                                 "ZID",
                                 "Customer",
                                 "Price",
-                                "Shipping Fee",
                                 "PV"
                 };
                 HashMap<String, String> mapping = new HashMap<>(2);
@@ -89,7 +87,7 @@ public class SaleOrderTransaction {
         }
 
         public MapResponse shippedSaleOrders(DataGridParams params) {
-                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, Sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sum(Sale_Order_Items.Price) Price, Sale_Orders.Shipping_Fee \"Shipping Fee\", Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Users On Users.Id = Sale_Orders.User_Id Join Forward_Shipments On Forward_Shipments.Id = Sale_Orders.Shipment_Id";
+                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, Sale_Orders.Order_Id \"Order Id\", Users.Username ZID, Users.Firstname Customer, Sum(Sale_Order_Items.Price) Price, Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Users On Users.Id = Sale_Orders.User_Id Join Forward_Shipments On Forward_Shipments.Id = Sale_Orders.Shipment_Id";
                 String count = "Select Count(Distinct Sale_Orders.Id) From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Users On Users.Id = Sale_Orders.User_Id Join Forward_Shipments On Forward_Shipments.Id = Sale_Orders.Shipment_Id";
                 String[] columns = {
                                 "Time",
@@ -97,7 +95,6 @@ public class SaleOrderTransaction {
                                 "ZID",
                                 "Customer",
                                 "Price",
-                                "Shipping Fee",
                                 "PV"
                 };
                 HashMap<String, String> mapping = new HashMap<>(3);
@@ -125,14 +122,13 @@ public class SaleOrderTransaction {
         }
 
         public MapResponse saleOrders(long id, DataGridParams params) {
-                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Sale_Order_Shipping_Statuses.Status \"Shipping Status\", Sum(Sale_Order_Items.Price) Price, Sale_Orders.Shipping_Fee \"Shipping Fee\", Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id";
+                String sql = "Select Sale_Orders.Id, Sale_Orders.Time, sale_Orders.Order_Id \"Order Id\", Sale_Order_Shipping_Statuses.Status \"Shipping Status\", Sum(Sale_Order_Items.Price) Price, Sum(Sale_Order_Items.Pv) PV From Sale_Orders Join Sale_Order_Shipping_Statuses On Sale_Order_Shipping_Statuses.Id = Sale_Orders.Shipping_Status_Id Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id";
                 String count = "Select Count(*) From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id";
                 String[] columns = {
                                 "Time",
                                 "Order Id",
                                 "Shipping Status",
                                 "Price",
-                                "Shipping Fee",
                                 "PV"
                 };
                 HashMap<String, String> mapping = new HashMap<>(4);
@@ -153,7 +149,7 @@ public class SaleOrderTransaction {
         }
 
         public MapResponse get(long id) {
-                String sql = "Select Sale_Orders.Id, Sale_Orders.Order_Id, Sale_Orders.Billing_Firstname, Sale_Orders.Billing_Lastname, Sale_Orders.Billing_Email, Sale_Orders.Billing_Phone, Sale_Orders.Billing_Address_1, Sale_Orders.Billing_Address_2, Sale_Orders.Billing_City, Sale_Orders.Billing_Postcode, Sale_Orders.Billing_State, Sale_Orders.Billing_Country, Sale_Orders.Shipping_FirstName, Sale_Orders.Shipping_Lastname, Sale_Orders.Shipping_Email, Sale_Orders.Shipping_Phone, Sale_Orders.Shipping_Address_1, Sale_Orders.Shipping_Address_2, Sale_Orders.Shipping_City, Sale_Orders.Shipping_Postcode, Sale_Orders.Shipping_State, Sale_Orders.Shipping_Country, Sale_Orders.Shipping_Fee, Sale_Orders.Time From Sale_Orders Where Sale_Orders.Id = ?";
+                String sql = "Select Sale_Orders.Id, Sale_Orders.Order_Id, Sale_Orders.Billing_Firstname, Sale_Orders.Billing_Lastname, Sale_Orders.Billing_Email, Sale_Orders.Billing_Phone, Sale_Orders.Billing_Address_1, Sale_Orders.Billing_Address_2, Sale_Orders.Billing_City, Sale_Orders.Billing_Postcode, Sale_Orders.Billing_State, Sale_Orders.Billing_Country, Sale_Orders.Shipping_FirstName, Sale_Orders.Shipping_Lastname, Sale_Orders.Shipping_Email, Sale_Orders.Shipping_Phone, Sale_Orders.Shipping_Address_1, Sale_Orders.Shipping_Address_2, Sale_Orders.Shipping_City, Sale_Orders.Shipping_Postcode, Sale_Orders.Shipping_State, Sale_Orders.Shipping_Country, Sale_Orders.Time From Sale_Orders Where Sale_Orders.Id = ?";
 
                 String items = "Select (Select Images.Image From Images Where Images.List_Id = Items.Image_Id Order by Index Asc Limit 1) Image, Items.Title, Items.Sku, Sale_Order_Items.Mrp, Sale_Order_Items.Price, Round(((Sale_Order_Items.Mrp - Sale_Order_Items.Price) / Sale_Order_Items.Mrp * 100)) Discount, Count(*) quantity From Sale_Order_Items Join Items On Items.Id = Sale_Order_Items.Item_Id Where Sale_Order_Items.Order_Id = ? Group By 1, 2, 3, 4, 5, 6";
 

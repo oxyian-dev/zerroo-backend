@@ -20,7 +20,7 @@ public class PurchaseController {
     @GetMapping("shipping")
     @IsAuthenticatedUser
     public ResponseEntity<MapResponse> shipping() {
-        return ResponseEntity.ok(MapResponse.success().put("shipping_charge", PurchaseTransaction.shipping(true)));
+        return ResponseEntity.ok(MapResponse.success().put("shipping_charge", 0));
     }
 
     @GetMapping

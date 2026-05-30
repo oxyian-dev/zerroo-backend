@@ -150,9 +150,31 @@ INSERT INTO distributors (
     kyc_status_id,
     bank_status_id,
     referer_id,
-    parent_id
+    parent_id,
+    self_pv
 ) VALUES
-    (1, 1, 1, 1, 1, NULL, NULL);
+    (1, 1, 1, 1, 1, NULL, NULL, 80);
+
+INSERT INTO addresses (
+    id,
+    saved_name,
+    distributor_id,
+    firstname,
+    lastname,
+    phone,
+    alt_phone,
+    email,
+    address_1,
+    address_2,
+    postcode,
+    landmark,
+    city,
+    state,
+    country,
+    time,
+    is_default
+) VALUES
+    (1, 'Home', 1, 'Shaara', 'Distributor', '9000000001', NULL, 'distributor@victoryworld.in', '5/837, Naal road', 'Thennampatti', '624802', 'Vedasandur', 'Dindigul', 'Tamil Nadu', 'India', (extract(epoch from now()) * 1000)::bigint, TRUE);
 
 INSERT INTO categories (id, category, parent, display) VALUES
     (1, 'Personal Care', NULL, TRUE),
@@ -214,6 +236,67 @@ INSERT INTO stock_ledgers (
 
 INSERT INTO stocks (id, item_id, inventory_id, quantity, location) VALUES
     (1, 1, 1, 100, NULL);
+
+INSERT INTO sale_orders (
+    id,
+    order_id,
+    shipment_id,
+    branch_id,
+    cutoff_id,
+    user_id,
+    billing_firstname,
+    billing_lastname,
+    billing_email,
+    billing_phone,
+    billing_address_1,
+    billing_address_2,
+    billing_city,
+    billing_postcode,
+    billing_state,
+    billing_country,
+    shipping_firstname,
+    shipping_lastname,
+    shipping_email,
+    shipping_phone,
+    shipping_alt_phone,
+    shipping_address_1,
+    shipping_address_2,
+    shipping_landmark,
+    shipping_postcode,
+    shipping_city,
+    shipping_state,
+    shipping_country,
+    shipping_fee,
+    shipping_basic,
+    shipping_gst_percent,
+    shipping_gst,
+    shipping_c_gst,
+    shipping_s_gst,
+    shipping_i_gst,
+    shipping_sac,
+    shipping_status_id,
+    time
+) VALUES
+    (1, 'SO/26-27/00001', NULL, 1, NULL, 1, 'Shaara', 'Distributor', 'distributor@victoryworld.in', '9000000001', '5/837, Naal road', 'Thennampatti', 'Dindigul', '624802', 'Tamil Nadu', 'India', 'Shaara', 'Distributor', 'distributor@victoryworld.in', '9000000001', NULL, '5/837, Naal road', 'Thennampatti', 'Vedasandur', '624802', 'Dindigul', 'Tamil Nadu', 'India', 0, 0, 0, 0, 0, 0, 0, '996812', 1, (extract(epoch from now()) * 1000)::bigint);
+
+INSERT INTO sale_order_items (
+    id,
+    order_id,
+    item_id,
+    combo_id,
+    mrp,
+    price,
+    cost,
+    gst_percent,
+    basic,
+    gst,
+    c_gst,
+    s_gst,
+    i_gst,
+    pv,
+    status_id
+) VALUES
+    (1, 1, 1, NULL, 4000, 4000, 4000, 0, 4000, 0, 0, 0, 0, 80, 1);
 
 DO $$
 DECLARE

@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 
 import org.javalite.activejdbc.Model;
 
-import com.hionstudios.CommonUtil;
 import com.hionstudios.zerroo.Constants;
 import com.hionstudios.zerroo.params.OrderParams;
 
@@ -48,22 +47,13 @@ public class SaleOrder extends Model {
         set("time", time);
         set("user_id", userid);
         set("cutoff_id", cutoff);
-        set("shipping_fee", shipping);
-        double shippingGstPercent = 12;
-        double shippingBasic = CommonUtil.removeGst(shipping, shippingGstPercent);
-        double shippingGst = shipping - shippingBasic;
-
-        set("shipping_basic", shippingBasic);
-        set("shipping_gst_percent", shippingGstPercent);
-        set("shipping_gst", shippingGst);
-
-        if (isTn) {
-            double halfGst = shippingGst / 2;
-            set("shipping_c_gst", halfGst);
-            set("shipping_s_gst", halfGst);
-        } else {
-            set("shipping_i_gst", shippingGst);
-        }
+        set("shipping_fee", 0);
+        set("shipping_basic", 0);
+        set("shipping_gst_percent", 0);
+        set("shipping_gst", 0);
+        set("shipping_c_gst", 0);
+        set("shipping_s_gst", 0);
+        set("shipping_i_gst", 0);
 
         set("shipping_status_id", SaleOrderShippingStatus.getId(SaleOrderShippingStatus.UN_SHIPPED));
 

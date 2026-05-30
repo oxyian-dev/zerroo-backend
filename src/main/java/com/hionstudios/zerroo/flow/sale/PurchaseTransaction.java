@@ -39,7 +39,8 @@ public class PurchaseTransaction {
             if (cartItems.size() == 0) {
                 return MapResponse.failure("Not Cart Items Found");
             }
-            double totalPrice = 0, shippingCharge = shipping(shipping);
+            double totalPrice = 0;
+            double shippingCharge = 0;
             for (MapResponse cartItem : cartItems) {
                 long itemId = cartItem.getLong("item_id");
                 int quantity = cartItem.getInt("quantity");
@@ -50,10 +51,10 @@ public class PurchaseTransaction {
                 totalPrice += price * quantity;
             }
             double purchaseWallet = Handler.getDouble("Select Purchase_Wallet From Distributors Where Id = ?", userid);
-            if (purchaseWallet < (totalPrice + shippingCharge)) {
+            if (purchaseWallet < totalPrice) {
                 return MapResponse.failure("Insufficient funds.");
             } else {
-                PurchaseWalletFlow.minus(userid, totalPrice + shippingCharge, PurchaseWalletTransactionType.PURCHASE);
+                PurchaseWalletFlow.minus(userid, totalPrice, PurchaseWalletTransactionType.PURCHASE);
             }
             boolean isTn = Objects.equals(params.getShippingState(), "Tamil Nadu");
             Long currentCutoffId = Cutoff.getCurrentId();
@@ -62,7 +63,7 @@ public class PurchaseTransaction {
                     time,
                     userid,
                     currentCutoffId,
-                    shippingCharge,
+                    0,
                     isTn);
 
             if (!saleOrder.insert()) {
@@ -194,13 +195,13 @@ public class PurchaseTransaction {
     }
 
     public static double shipping(boolean shipping) {
-        return shipping ? 100 : 0;
+        return 0;
     }
 
     public MapResponse purchases() {
         long userid = UserUtil.getUserid();
 
-        String sql = "Select Forward_Shipments.Invoice_Id, Sale_Orders.Order_Id, Sale_Orders.Time, Array_Agg(Json_Build_Object('item_id', Items.Id, 'title', Items.Title, 'description', Items.Description, 'category', Categories.Category, 'size', Sizes.size, 'image', (Select Images.Image From Images Where Images.List_Id = Items.Image_Id Limit 1), 'price', Sale_Order_Items.Price, 'mrp', Sale_Order_Items.Mrp, 'discount', Round(((Sale_Order_Items.Mrp - Sale_Order_Items.Price) / Sale_Order_Items.Mrp * 100)), 'status', Sale_Order_Item_Statuses.Status, 'track', Replace(Couriers.Tracking_Url, '${awb}', Forward_Shipments.awb))) Items, Sale_Orders.Shipping_Fee, Sale_Orders.Shipping_Fee + Sum(Sale_Order_Items.Price) Total From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Items On Items.Id = Sale_Order_Items.Item_Id Join Item_Groups On Item_Groups.Id = Items.Group_Id Join Categories On Categories.Id = Item_Groups.Category_Id Left Join Sizes On Sizes.Id = Items.Size_Id Join Sale_Order_Item_Statuses On Sale_Order_Item_Statuses.Id = Sale_Order_Items.Status_Id Left Join Forward_Shipments On Forward_Shipments.Id = Sale_Orders.Shipment_Id Left Join Couriers On Couriers.Id = Forward_Shipments.Courier_Id Where Sale_Orders.User_Id = ? Group By Sale_Orders.Order_Id, Forward_Shipments.Invoice_Id, Sale_Orders.Time, Sale_Orders.Shipping_Fee Order By Time Desc";
+        String sql = "Select Forward_Shipments.Invoice_Id, Sale_Orders.Order_Id, Sale_Orders.Time, Array_Agg(Json_Build_Object('item_id', Items.Id, 'title', Items.Title, 'description', Items.Description, 'category', Categories.Category, 'size', Sizes.size, 'image', (Select Images.Image From Images Where Images.List_Id = Items.Image_Id Limit 1), 'price', Sale_Order_Items.Price, 'mrp', Sale_Order_Items.Mrp, 'discount', Round(((Sale_Order_Items.Mrp - Sale_Order_Items.Price) / Sale_Order_Items.Mrp * 100)), 'status', Sale_Order_Item_Statuses.Status, 'track', Replace(Couriers.Tracking_Url, '${awb}', Forward_Shipments.awb))) Items, Sum(Sale_Order_Items.Price) Total From Sale_Orders Join Sale_Order_Items On Sale_Order_Items.Order_Id = Sale_Orders.Id Join Items On Items.Id = Sale_Order_Items.Item_Id Join Item_Groups On Item_Groups.Id = Items.Group_Id Join Categories On Categories.Id = Item_Groups.Category_Id Left Join Sizes On Sizes.Id = Items.Size_Id Join Sale_Order_Item_Statuses On Sale_Order_Item_Statuses.Id = Sale_Order_Items.Status_Id Left Join Forward_Shipments On Forward_Shipments.Id = Sale_Orders.Shipment_Id Left Join Couriers On Couriers.Id = Forward_Shipments.Courier_Id Where Sale_Orders.User_Id = ? Group By Sale_Orders.Order_Id, Forward_Shipments.Invoice_Id, Sale_Orders.Time Order By Time Desc";
         MapResponse response = new MapResponse();
         response.put("orders", Handler.findAll(sql, userid));
         return response;

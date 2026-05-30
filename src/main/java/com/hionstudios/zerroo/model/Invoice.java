@@ -45,13 +45,13 @@ public class Invoice extends Model {
         set("shipping_latitude", saleOrder.get("shipping_latitude"));
         set("shipping_longitude", saleOrder.get("shipping_longitude"));
 
-        set("shipping_fee", order.get("shipping_fee"));
-        set("shipping_basic", order.get("shipping_basic"));
-        set("shipping_gst_percent", order.get("shipping_gst_percent"));
-        set("shipping_gst", order.get("shipping_gst"));
-        set("shipping_c_gst", order.get("shipping_c_gst"));
-        set("shipping_s_gst", order.get("shipping_s_gst"));
-        set("shipping_i_gst", order.get("shipping_i_gst"));
+        set("shipping_fee", 0);
+        set("shipping_basic", 0);
+        set("shipping_gst_percent", 0);
+        set("shipping_gst", 0);
+        set("shipping_c_gst", 0);
+        set("shipping_s_gst", 0);
+        set("shipping_i_gst", 0);
         set("shipping_sac", order.get("shipping_sac"));
         set("fy", Constants.FY);
         set("time", TimeUtil.currentTime());
