@@ -39,6 +39,6 @@ public class IncomeTransaction {
                 tdsAdmin,
                 type).insert();
 
-        DistributorFinancials.reconcile(distributor);
+        DistributorFinancials.reconcileFinancialState(distributor);
     }
 }

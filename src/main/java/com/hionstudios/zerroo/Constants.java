@@ -9,6 +9,7 @@ public class Constants {
     public static final long ACTIVATION_PV = 80;
     public static final long MAX_SELF_PV = 80;
     public static final int MIN_PAIR_MATCH = 80;
+    public static final int QUALIFICATION_INCOME = 800;
     public static final int PAIR_MATCH_INCOME = 800;
     public static final int SELF_PURCHASE_INCOME = 10;
 

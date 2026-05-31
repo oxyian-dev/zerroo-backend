@@ -7,10 +7,8 @@ import com.hionstudios.zerroo.model.IncomeWalletTransactionType;
 public class IncomeCalculator {
 
     public static void pairMatchIncome(Distributor distributor, long cutoffId) {
-        if (distributor.getDouble("self_pv") >= Constants.ACTIVATION_PV) {
-            DistributorFinancials.reconcileFinancialState(distributor);
-            RankUpdate.update(distributor, cutoffId);
-        }
+        DistributorFinancials.reconcileFinancialState(distributor);
+        RankUpdate.update(distributor, cutoffId);
     }
 
     public static void spIncome(Distributor distributor, long cutoffId, double sp_pv) {

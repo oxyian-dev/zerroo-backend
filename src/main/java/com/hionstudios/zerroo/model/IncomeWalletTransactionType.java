@@ -5,6 +5,7 @@ import org.javalite.activejdbc.annotations.Cached;
 
 @Cached
 public class IncomeWalletTransactionType extends Model {
+    public static final String QUALIFICATION_INCOME = "Qualification Income";
     public static final String PAIR_MATCH_INCOME = "Pair Match Income";
     public static final String COMPANY = "Company";
     public static final String PAYOUT = "Payout";

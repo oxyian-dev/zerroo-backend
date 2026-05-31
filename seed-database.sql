@@ -77,7 +77,8 @@ INSERT INTO income_wallet_transaction_types (id, type) VALUES
     (2, 'Company'),
     (3, 'Payout'),
     (4, 'Opening Balance'),
-    (5, 'Sp Income');
+    (5, 'Sp Income'),
+    (6, 'Qualification Income');
 
 INSERT INTO kyc_verification_statuses (id, status) VALUES
     (1, 'Pending'),
@@ -153,7 +154,7 @@ INSERT INTO distributors (
     parent_id,
     self_pv
 ) VALUES
-    (1, 1, 1, 1, 1, NULL, NULL, 80);
+    (1, 1, 1, 1, 1, NULL, NULL, 0);
 
 INSERT INTO addresses (
     id,
@@ -237,67 +238,6 @@ INSERT INTO stock_ledgers (
 INSERT INTO stocks (id, item_id, inventory_id, quantity, location) VALUES
     (1, 1, 1, 100, NULL);
 
-INSERT INTO sale_orders (
-    id,
-    order_id,
-    shipment_id,
-    branch_id,
-    cutoff_id,
-    user_id,
-    billing_firstname,
-    billing_lastname,
-    billing_email,
-    billing_phone,
-    billing_address_1,
-    billing_address_2,
-    billing_city,
-    billing_postcode,
-    billing_state,
-    billing_country,
-    shipping_firstname,
-    shipping_lastname,
-    shipping_email,
-    shipping_phone,
-    shipping_alt_phone,
-    shipping_address_1,
-    shipping_address_2,
-    shipping_landmark,
-    shipping_postcode,
-    shipping_city,
-    shipping_state,
-    shipping_country,
-    shipping_fee,
-    shipping_basic,
-    shipping_gst_percent,
-    shipping_gst,
-    shipping_c_gst,
-    shipping_s_gst,
-    shipping_i_gst,
-    shipping_sac,
-    shipping_status_id,
-    time
-) VALUES
-    (1, 'SO/26-27/00001', NULL, 1, NULL, 1, 'Shaara', 'Distributor', 'distributor@victoryworld.in', '9000000001', '5/837, Naal road', 'Thennampatti', 'Dindigul', '624802', 'Tamil Nadu', 'India', 'Shaara', 'Distributor', 'distributor@victoryworld.in', '9000000001', NULL, '5/837, Naal road', 'Thennampatti', 'Vedasandur', '624802', 'Dindigul', 'Tamil Nadu', 'India', 0, 0, 0, 0, 0, 0, 0, '996812', 1, (extract(epoch from now()) * 1000)::bigint);
-
-INSERT INTO sale_order_items (
-    id,
-    order_id,
-    item_id,
-    combo_id,
-    mrp,
-    price,
-    cost,
-    gst_percent,
-    basic,
-    gst,
-    c_gst,
-    s_gst,
-    i_gst,
-    pv,
-    status_id
-) VALUES
-    (1, 1, 1, NULL, 4000, 4000, 4000, 0, 4000, 0, 0, 0, 0, 80, 1);
-
 DO $$
 DECLARE
     seq_name text;
@@ -340,7 +280,7 @@ BEGIN
             FROM income_wallet_transactions t
             JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
             WHERE t.distributor_id = affected_distributor_id
-              AND tt.type IN ('Pair Match Income', 'Sp Income', 'Company')
+              AND tt.type IN ('Qualification Income', 'Pair Match Income', 'Sp Income', 'Company')
         ), 0),
         pair_match_income = COALESCE((
             SELECT SUM(t.full_amount)
@@ -385,7 +325,7 @@ SET
         FROM income_wallet_transactions t
         JOIN income_wallet_transaction_types tt ON tt.id = t.type_id
         WHERE t.distributor_id = d.id
-          AND tt.type IN ('Pair Match Income', 'Sp Income', 'Company')
+          AND tt.type IN ('Qualification Income', 'Pair Match Income', 'Sp Income', 'Company')
     ), 0),
     pair_match_income = COALESCE((
         SELECT SUM(t.full_amount)
