@@ -176,7 +176,8 @@ public final class DistributorFinancials {
         double totalRightPv = safeDouble(summary, "total_right_pv");
         double smaller = Math.min(totalLeftPv, totalRightPv);
         double larger = Math.max(totalLeftPv, totalRightPv);
-        return smaller >= Constants.MIN_PAIR_MATCH && larger >= (Constants.MIN_PAIR_MATCH * 2);
+        return smaller >= Constants.MIN_PAIR_MATCH
+                && Math.abs(larger - (smaller * 2)) < 0.0001;
     }
 
     public static void reconcileAll() {
