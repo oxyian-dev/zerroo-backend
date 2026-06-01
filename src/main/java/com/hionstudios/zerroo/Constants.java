@@ -12,6 +12,8 @@ public class Constants {
     public static final int QUALIFICATION_INCOME = 800;
     public static final int PAIR_MATCH_INCOME = 800;
     public static final int SELF_PURCHASE_INCOME = 10;
+    public static final double INCOME_TDS_PERCENT = 2;
+    public static final double INCOME_ADMIN_PERCENT = 3;
 
     public static String[] TDS = { IncomeWalletTransactionType.PAYOUT };
 }

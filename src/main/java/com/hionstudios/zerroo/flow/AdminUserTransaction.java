@@ -11,6 +11,7 @@ import com.hionstudios.db.SqlUtil;
 import com.hionstudios.iam.UserUtil;
 import com.hionstudios.time.TimeUtil;
 import com.hionstudios.zerroo.flow.cutoff.IncomeTransaction;
+import com.hionstudios.zerroo.flow.cutoff.DistributorFinancials;
 import com.hionstudios.zerroo.model.BankVerification;
 import com.hionstudios.zerroo.model.BankVerificationStatus;
 import com.hionstudios.zerroo.model.Distributor;
@@ -148,6 +149,16 @@ public class AdminUserTransaction {
 
     public MapResponse status(long id, boolean status) {
         Distributor.update("active = ?", "Id = ?", status, id);
+        Distributor distributor = Distributor.findById(id);
+        distributor.set("cutoff_self_pv", 0);
+        distributor.set("cutoff_left_pv", 0);
+        distributor.set("cutoff_right_pv", 0);
+        distributor.set("carry_left_pv", 0);
+        distributor.set("carry_right_pv", 0);
+        distributor.saveIt();
+        if (status) {
+            DistributorFinancials.recordIncomeBaseline(distributor);
+        }
         return MapResponse.success();
     }
 

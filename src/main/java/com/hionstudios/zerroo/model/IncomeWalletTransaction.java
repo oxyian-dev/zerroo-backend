@@ -20,15 +20,15 @@ public class IncomeWalletTransaction extends Model {
             double income,
             double actualAmount,
             double closingAmount,
-            double tdsAdmin,
+            double tdsAmount,
+            double adminAmount,
             String type) {
         set("distributor_id", distributorId);
         set("opening_amount", currentIncomeWallet);
         set("full_amount", income);
-        set("actual_amount", income);
-        set("tds_amount", tdsAdmin);
-        set("admin_amount", tdsAdmin);
         set("actual_amount", actualAmount);
+        set("tds_amount", tdsAmount);
+        set("admin_amount", adminAmount);
         set("closing_amount", closingAmount);
         set("type_id", IncomeWalletTransactionType.getId(type));
         set("time", TimeUtil.currentTime());
