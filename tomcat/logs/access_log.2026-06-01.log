@@ -50,3 +50,12 @@
 127.0.0.1 - - [01/Jun/2026:04:23:52 +0000] "GET /api/admin/dashboard HTTP/1.1" 200 226
 127.0.0.1 - - [01/Jun/2026:04:23:54 +0000] "GET /api/shipments/count HTTP/1.1" 200 48
 127.0.0.1 - - [01/Jun/2026:04:23:54 +0000] "GET /api/shipments HTTP/1.1" 200 217
+190.109.21.249 - - [01/Jun/2026:04:30:39 +0000] "GET /manager/html HTTP/1.1" 401 141
+127.0.0.1 - - [01/Jun/2026:04:43:50 +0000] "GET / HTTP/1.1" 401 103
+127.0.0.1 - - [01/Jun/2026:04:44:28 +0000] "GET /api/shipments/count HTTP/1.1" 401 122
+127.0.0.1 - - [01/Jun/2026:04:45:31 +0000] "GET /api/shipments/count HTTP/1.1" 200 48
+127.0.0.1 - - [01/Jun/2026:04:45:31 +0000] "GET /api/shipments HTTP/1.1" 200 217
+127.0.0.1 - - [01/Jun/2026:04:45:33 +0000] "GET /api/shipments/status/hold HTTP/1.1" 200 217
+127.0.0.1 - - [01/Jun/2026:04:45:34 +0000] "GET /api/shipments HTTP/1.1" 200 217
+127.0.0.1 - - [01/Jun/2026:04:45:35 +0000] "GET /api/shipments/status/hold HTTP/1.1" 200 217
+190.109.21.249 - - [01/Jun/2026:04:52:35 +0000] "GET /manager/html HTTP/1.1" 401 141

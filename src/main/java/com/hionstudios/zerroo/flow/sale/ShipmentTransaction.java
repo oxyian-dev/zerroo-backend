@@ -90,6 +90,8 @@ public class ShipmentTransaction {
         switch (status) {
             case "pending":
                 return pending(params);
+            case "hold":
+                return statusShipments(ForwardShipmentStatus.HOLD, params);
             case "processing":
                 return statusShipments(ForwardShipmentStatus.PROCESSING, params);
             case "picked-up":
@@ -115,13 +117,14 @@ public class ShipmentTransaction {
     }
 
     private MapResponse pending(DataGridParams params) {
-        String sql = "Select Invoices.Id, Forward_Shipments.Id Dispatch, Invoices.Id Download, Forward_Shipments.Time, Users.Username ZID, Forward_Shipments.Firstname Customer, Forward_Shipments.City, Forward_Shipments.State From Forward_Shipments Join Forward_Shipment_Statuses On Forward_Shipment_Statuses.Id = Forward_Shipments.Status_Id Join Invoices On Invoices.Id = Forward_Shipments.Invoice_Id Join Users On Users.Id = Forward_Shipments.User_Id";
+        String sql = "Select Invoices.Id, Forward_Shipments.Id Dispatch, Invoices.Id Download, Forward_Shipments.Id Hold, Forward_Shipments.Time, Users.Username ZID, Forward_Shipments.Firstname Customer, Forward_Shipments.City, Forward_Shipments.State From Forward_Shipments Join Forward_Shipment_Statuses On Forward_Shipment_Statuses.Id = Forward_Shipments.Status_Id Join Invoices On Invoices.Id = Forward_Shipments.Invoice_Id Join Users On Users.Id = Forward_Shipments.User_Id";
 
         String count = "Select Count(*) From Forward_Shipments Join Forward_Shipment_Statuses On Forward_Shipment_Statuses.Id = Forward_Shipments.Status_Id Join Invoices On Invoices.Id = Forward_Shipments.Invoice_Id Join Users On Users.Id = Forward_Shipments.User_Id";
 
         String[] columns = {
                 "Dispatch",
                 "Download",
+                "Hold",
                 "Time",
                 "ZID",
                 "Customer",
@@ -143,6 +146,22 @@ public class ShipmentTransaction {
                 new SqlQuery(sql, criteria),
                 new SqlQuery(count, filter),
                 columns);
+    }
+
+    public MapResponse hold(long id) {
+        long userid = UserUtil.getUserid();
+        long time = TimeUtil.currentTime();
+        ForwardShipment forwardShipment = ForwardShipment.findById(id);
+        Integer oldStatusId = forwardShipment.getInteger("status_id");
+        Integer status = ForwardShipmentStatus.getId(ForwardShipmentStatus.HOLD);
+
+        if (!status.equals(oldStatusId)) {
+            addHistory(id, "Status", oldStatusId, status, userid, null, time);
+            forwardShipment.set("status_id", status);
+        }
+
+        forwardShipment.saveIt();
+        return MapResponse.success();
     }
 
     public MapResponse count() {

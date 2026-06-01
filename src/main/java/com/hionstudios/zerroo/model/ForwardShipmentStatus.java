@@ -6,6 +6,7 @@ import org.javalite.activejdbc.annotations.Cached;
 @Cached
 public class ForwardShipmentStatus extends Model {
     public static final String PENDING = "Pending";
+    public static final String HOLD = "Hold";
     public static final String PROCESSING = "Processing";
     public static final String PICKED_UP = "Picked Up";
     public static final String DISPATCHED = "Dispatched";
@@ -18,6 +19,11 @@ public class ForwardShipmentStatus extends Model {
 
     public static final int getId(String status) {
         ForwardShipmentStatus forwardShipmentStatus = ForwardShipmentStatus.findFirst("status =?", status);
+        if (forwardShipmentStatus == null) {
+            forwardShipmentStatus = new ForwardShipmentStatus();
+            forwardShipmentStatus.set("status", status);
+            forwardShipmentStatus.insert();
+        }
         return forwardShipmentStatus.getInteger("id");
     }
 }

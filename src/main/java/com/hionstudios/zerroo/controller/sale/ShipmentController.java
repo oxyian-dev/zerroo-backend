@@ -52,6 +52,12 @@ public class ShipmentController {
                 height)).write();
     }
 
+    @PutMapping("{id}/hold")
+    @IsAdmin
+    public ResponseEntity<MapResponse> hold(@PathVariable long id) {
+        return ((DbTransaction) () -> new ShipmentTransaction().hold(id)).write();
+    }
+
     @GetMapping("status/{status}")
     @IsAdmin
     public ResponseEntity<MapResponse> pendingShipments(

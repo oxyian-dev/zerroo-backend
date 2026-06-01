@@ -62,15 +62,16 @@ INSERT INTO cutoff_statuses (id, status) VALUES
 
 INSERT INTO forward_shipment_statuses (id, status) VALUES
     (1, 'Pending'),
-    (2, 'Processing'),
-    (3, 'Picked Up'),
-    (4, 'Dispatched'),
-    (5, 'Delivered'),
-    (6, 'RTO Pending'),
-    (7, 'RTO Returned'),
-    (8, 'Lost'),
-    (9, 'Exception'),
-    (10, 'Error');
+    (2, 'Hold'),
+    (3, 'Processing'),
+    (4, 'Picked Up'),
+    (5, 'Dispatched'),
+    (6, 'Delivered'),
+    (7, 'RTO Pending'),
+    (8, 'RTO Returned'),
+    (9, 'Lost'),
+    (10, 'Exception'),
+    (11, 'Error');
 
 INSERT INTO income_wallet_transaction_types (id, type) VALUES
     (1, 'Pair Match Income'),
@@ -199,7 +200,7 @@ INSERT INTO price_lists (
     created_time,
     created_by
 ) VALUES
-    (1, 'Main', 'Shaara Sanitary Pads', 4000, 4000, 4000, 0, 80, (extract(epoch from now()) * 1000)::bigint, 10001);
+    (1, 'Main', 'Shaara Sanitary Pads', 4400, 4400, 4400, 0, 80, (extract(epoch from now()) * 1000)::bigint, 10001);
 
 INSERT INTO items (
     id,
