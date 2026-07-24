@@ -25,6 +25,8 @@
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/SpecificationType.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/params/SaleOrderParam.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/security/BasicSecurityConfiguration.java
+/home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/controller/UploadController.java
+/home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/CompanyDetails.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/item/variation/SizeTransaction.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/model/Stock.java
 /home/oxyiandev/zerroo-backend/src/main/java/com/hionstudios/zerroo/flow/item/ItemGroupTransaction.java

@@ -3,6 +3,7 @@ package com.hionstudios.zerroo.model;
 import org.javalite.activejdbc.Model;
 
 import com.hionstudios.time.TimeUtil;
+import com.hionstudios.zerroo.CompanyDetails;
 
 public class PurchaseWalletRequest extends Model {
     public PurchaseWalletRequest() {
@@ -19,7 +20,7 @@ public class PurchaseWalletRequest extends Model {
         set("distributor_id", distributorId);
         set("amount", amount);
         set("date", date);
-        set("bank", "Axis Bank");
+        set("bank", CompanyDetails.BANK_NAME);
         set("method", method);
         set("depositor", depositor);
         set("transaction_id", transactionId);

@@ -47,7 +47,11 @@ public class CategoryTransaction {
         if (c.insert()) {
             CachedSelect.dropCache("category");
             if (image != null) {
-                if (c.set("image", ImageUtil.uploadProducts(image, "cat-" + c.getId())).saveIt()) {
+                String img = ImageUtil.uploadProducts(image, "cat-" + c.getId());
+                if (img == null || img.isBlank()) {
+                    return MapResponse.failure("Image upload failed. Please try again.");
+                }
+                if (c.set("image", img).saveIt()) {
                     categories = null;
                     return MapResponse.success();
                 }
@@ -65,7 +69,11 @@ public class CategoryTransaction {
         c.set("parent", parent);
         String i = c.getString("image");
         if (image != null) {
-            c.set("image", ImageUtil.uploadProducts(image, "cat-" + id));
+            String img = ImageUtil.uploadProducts(image, "cat-" + id);
+            if (img == null || img.isBlank()) {
+                return MapResponse.failure("Image upload failed. Please try again.");
+            }
+            c.set("image", img);
         } else if (i != null && removed) {
             ImageUtil.delete(i);
             c.set("image", null);
@@ -81,8 +89,12 @@ public class CategoryTransaction {
         if (i != null) {
             ImageUtil.delete(i);
         }
+        String img = ImageUtil.uploadProducts(image, "cat-" + id);
+        if (img == null || img.isBlank()) {
+            return MapResponse.failure("Image upload failed. Please try again.");
+        }
         categories = null;
-        return category.set("image", ImageUtil.uploadProducts(image, "cat-" + id)).saveIt() ? MapResponse.success()
+        return category.set("image", img).saveIt() ? MapResponse.success()
                 : MapResponse.failure();
     }
 

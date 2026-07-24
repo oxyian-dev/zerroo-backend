@@ -60,7 +60,10 @@ public class ImageListTransaction {
         String name = Handler.getString(sql, list);
         for (MultipartFile image : images) {
             String filename = name + "-" + TimeUtil.currentTime();
-            String img = ImageUtil.uploadProducts(image, filename);
+            String img = ImageUtil.uploadLocal(image, filename, "image-lists");
+            if (img == null || img.isBlank()) {
+                return failure("Image upload failed. Please try again.");
+            }
             new Image(list, img).insert();
         }
         return success();

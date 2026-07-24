@@ -7,7 +7,7 @@ import com.hionstudios.db.Handler;
 
 @Cached
 public class Branch extends Model {
-    public static final String GSTIN_TAMIL_NADU = "33AADFZ7502M1ZX";
+    public static final String GSTIN_TAMIL_NADU = "33AAMCV1878N1ZL";
 
     public static int getIdFromGstin(String gstin) {
         Branch branch = Branch.findFirst("gstin = ?", gstin);

@@ -18,7 +18,9 @@ com/hionstudios/zerroo/model/KycVerification.class
 com/hionstudios/zerroo/model/BankVerification.class
 com/hionstudios/zerroo/flow/cutoff/RankUpdate.class
 com/hionstudios/zerroo/params/SaleOrderParam.class
+com/hionstudios/zerroo/flow/cutoff/DistributorFinancials.class
 com/hionstudios/zerroo/flow/InventoryTransaction.class
+com/hionstudios/zerroo/CompanyDetails.class
 com/hionstudios/iam/IsDistributor.class
 com/hionstudios/zerroo/model/SaleOrderShippingStatus.class
 com/hionstudios/iam/Authenticator.class
@@ -74,6 +76,7 @@ com/hionstudios/zerroo/flow/item/variation/ColorTransaction.class
 com/hionstudios/zerroo/model/CutoffStatus.class
 com/hionstudios/iam/HionUserDetailsService.class
 com/hionstudios/zerroo/flow/AddressTransaction.class
+com/hionstudios/iam/IsAdminOrDistributor.class
 com/hionstudios/zerroo/model/ResetPassword.class
 com/hionstudios/zerroo/model/SaleOrderItemStatuses.class
 com/hionstudios/zerroo/controller/ApiController.class
@@ -104,6 +107,7 @@ com/hionstudios/zerroo/model/Otp.class
 com/hionstudios/zerroo/controller/InventoryController.class
 com/hionstudios/zerroo/model/Payout.class
 com/hionstudios/zerroo/model/SaleOrderItem.class
+com/hionstudios/zerroo/controller/UploadController.class
 com/hionstudios/zerroo/flow/sale/InvoiceTransaction.class
 com/hionstudios/zerroo/flow/item/ItemGroupTransaction.class
 com/hionstudios/zerroo/controller/VerificationController.class
@@ -124,6 +128,7 @@ com/hionstudios/time/ISTCalender.class
 com/hionstudios/zerroo/controller/AuthController.class
 com/hionstudios/zerroo/flow/VerificationTransaction.class
 com/hionstudios/zerroo/model/ItemGroup.class
+com/hionstudios/iam/IsAuthenticatedUser.class
 com/hionstudios/zerroo/flow/item/CategoryTransaction.class
 com/hionstudios/zerroo/model/Transporter.class
 com/hionstudios/zerroo/controller/income/WalletStatementController.class

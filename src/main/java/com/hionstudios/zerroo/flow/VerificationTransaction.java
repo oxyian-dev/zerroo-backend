@@ -437,6 +437,10 @@ public class VerificationTransaction {
             MultipartFile proofImage) {
         long distributorId = UserUtil.getUserid();
 
+        if (proofImage == null || proofImage.isEmpty()) {
+            return MapResponse.failure("Upload screenshot proof is mandatory");
+        }
+
         boolean alreadyExists = Handler.exists(
                 "Select Purchase_Wallet_Requests.Id From Purchase_Wallet_Requests Join Purchase_Wallet_Request_Statuses On Purchase_Wallet_Request_Statuses.Id = Purchase_Wallet_Requests.Status_Id And Purchase_Wallet_Request_Statuses.Status != ? Where Purchase_Wallet_Requests.Transaction_Id iLIke ?",
                 PurchaseWalletRequestStatus.REJECTED, transaction);
@@ -444,6 +448,9 @@ public class VerificationTransaction {
             return MapResponse.failure("This Transaction ID is either Pending or Verified");
         }
         String proof = proofImage != null ? ImageUtil.uploadWalletRequest(proofImage, transaction) : null;
+        if (proof == null || proof.isBlank()) {
+            return MapResponse.failure("Unable to upload proof image");
+        }
         PurchaseWalletRequest purchaseWalletRequest = new PurchaseWalletRequest(
                 distributorId,
                 amount,

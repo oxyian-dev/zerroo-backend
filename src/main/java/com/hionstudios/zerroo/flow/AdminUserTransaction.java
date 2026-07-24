@@ -1,6 +1,7 @@
 package com.hionstudios.zerroo.flow;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import com.hionstudios.MapResponse;
 import com.hionstudios.datagrid.DataGridParams;
@@ -13,6 +14,15 @@ import com.hionstudios.time.TimeUtil;
 import com.hionstudios.zerroo.flow.cutoff.IncomeTransaction;
 import com.hionstudios.zerroo.flow.cutoff.DistributorFinancials;
 import com.hionstudios.zerroo.model.BankVerification;
+import com.hionstudios.zerroo.model.Cart;
+import com.hionstudios.zerroo.model.CutoffEntry;
+import com.hionstudios.zerroo.model.DistributorHistory;
+import com.hionstudios.zerroo.model.IncomeWalletTransaction;
+import com.hionstudios.zerroo.model.Login;
+import com.hionstudios.zerroo.model.Otp;
+import com.hionstudios.zerroo.model.PayoutEntry;
+import com.hionstudios.zerroo.model.PurchaseWalletTransaction;
+import com.hionstudios.zerroo.model.Wishlist;
 import com.hionstudios.zerroo.model.BankVerificationStatus;
 import com.hionstudios.zerroo.model.Distributor;
 import com.hionstudios.zerroo.model.IncomeWalletTransactionType;
@@ -24,6 +34,8 @@ import com.hionstudios.zerroo.model.UserRole;
 import com.hionstudios.zerroo.model.UserType;
 
 public class AdminUserTransaction {
+    private static final Pattern MIDNIGHT_RANGE_TIME = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}(?:T|\\s)00:00$");
+
     public MapResponse addUser(String firstname, String lastname, String email, String password, long[] roles) {
         String sql = "Select Max(Users.id) + 1 Id From Users";
         User user = new User();
@@ -83,6 +95,7 @@ public class AdminUserTransaction {
         for (int i = 0; i < params.filterColumn.length; i++) {
             params.filterColumn[i] = mapping.getOrDefault(params.filterColumn[i], params.filterColumn[i]);
         }
+        normalizeCreatedTimeFilters(params);
         SqlCriteria criteria = SqlUtil.constructCriteria(params, customCriteria, true);
         SqlCriteria filter = SqlUtil.constructCriteria(params, customCriteria);
 
@@ -124,6 +137,24 @@ public class AdminUserTransaction {
                 "IFSc Code");
     }
 
+    private void normalizeCreatedTimeFilters(DataGridParams params) {
+        if (params == null || params.filterColumn == null || params.filterValue == null) {
+            return;
+        }
+        for (int i = 0; i < params.filterColumn.length && i < params.filterValue.length; i++) {
+            if (!"Users.Created_Time".equals(params.filterColumn[i])) {
+                continue;
+            }
+            String value = params.filterValue[i];
+            if (value == null) {
+                continue;
+            }
+            if (MIDNIGHT_RANGE_TIME.matcher(value).matches()) {
+                params.filterValue[i] = value.substring(0, 10);
+            }
+        }
+    }
+
     public MapResponse viewDistributor(long id) {
         String sql = "Select Users.Username, Users.Firstname, Users.Lastname, Users.Phone, Users.Email, Users.Avatar, Kyc_Verifications.Aadhaar, Kyc_Verifications.Aadhaar_Front_Image, Kyc_Verifications.Aadhaar_Back_Image, Kyc_Verifications.Pan, Kyc_Verifications.Pan_Firstname, Kyc_Verifications.Pan_Lastname, Kyc_Verifications.Pan_Image, Kyc_Verification_Statuses.Status Kyc_Verification_Status, Bank_Verifications.Bank, Bank_Verifications.Branch, Bank_Verifications.Ifsc, Bank_Verifications.Account_No, Bank_Verifications.Image Bank_Image, Bank_Verification_Statuses.Status Bank_Verification_Status, Distributors.Referer_Id, Distributors.Self_Pv, Distributors.Cutoff_Self_Pv, Distributors.Cutoff_Left_Pv, Distributors.Cutoff_Right_Pv, Distributors.Carry_Left_Pv, Distributors.Carry_Right_Pv, Distributors.Sp_Pv, Referer.Firstname Referer_Firstname, Referer.Lastname Referer_Lastname, Referer.Username Referer_Username, Users.Created_Time, Distributors.Purchase_Wallet, (Select Coalesce(Sum(Income_Wallet_Transactions.Actual_Amount), 0) From Income_Wallet_Transactions Where Income_Wallet_Transactions.Distributor_Id = Distributors.Id) Income_Wallet From Users Join Distributors On Distributors.Id = Users.Id Left Join Bank_Verifications On Bank_Verifications.Id = Distributors.Bank_Verification_Id Left Join Bank_Verification_Statuses On Bank_Verification_Statuses.Id = Bank_Verifications.Status Left Join Kyc_Verifications On Kyc_Verifications.Id = Distributors.Kyc_Verification_Id Left Join Kyc_Verification_Statuses On Kyc_Verification_Statuses.Id = Kyc_Verifications.Status Left Join Users Referer On Referer.Id = Distributors.Referer_Id Where Users.Id = ?";
         return Handler.findFirst(sql, id);
@@ -131,6 +162,15 @@ public class AdminUserTransaction {
 
     public MapResponse editDistributor(long id, String firstname, String lastname, String phone, String email,
             String referer) {
+        User existingUser = User.findById(id);
+        String oldPhone = existingUser.getString("phone");
+        if (!phone.equals(oldPhone)) {
+            String phoneCountSql = "Select Count(*) From Users Where Phone iLike ?";
+            long phoneCount = Handler.getLong(phoneCountSql, phone);
+            if (phoneCount >= 7) {
+                return MapResponse.failure("This phone number is already used by 7 distributors. Maximum limit reached.");
+            }
+        }
         Distributor.update("referer_id = (Select Id From Users Where Username = ?)", "id = ?", referer, id);
         User user = User.findById(id);
         user.set("firstname", firstname);
@@ -289,6 +329,27 @@ public class AdminUserTransaction {
 
     public MapResponse removeKyc(long id) {
         Distributor.update("Kyc_Status_Id = ?, Kyc_Verification_Id = ?", "Id = ?", null, null, id);
+        return MapResponse.success();
+    }
+
+    public MapResponse deleteDistributor(long id) {
+        // Clear tree references in the binary tree
+        Distributor.update("Left_Id = Null", "Left_Id = ?", id);
+        Distributor.update("Right_Id = Null", "Right_Id = ?", id);
+        // Delete dependent records using Model classes
+        IncomeWalletTransaction.delete("Distributor_Id = ?", id);
+        PurchaseWalletTransaction.delete("Distributor_Id = ?", id);
+        DistributorHistory.delete("Distributor_Id = ?", id);
+        PayoutEntry.delete("Distributor_Id = ?", id);
+        CutoffEntry.delete("Distributor_Id = ?", id);
+        Cart.delete("User_Id = ?", id);
+        Wishlist.delete("User_Id = ?", id);
+        Login.delete("User_Id = ?", id);
+        Otp.delete("User_Id = ?", id);
+        KycVerification.delete("Distributor_Id = ?", id);
+        BankVerification.delete("Distributor_Id = ?", id);
+        Distributor.delete("Id = ?", id);
+        User.delete("Id = ?", id);
         return MapResponse.success();
     }
 

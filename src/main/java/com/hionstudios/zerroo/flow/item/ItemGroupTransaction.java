@@ -26,6 +26,9 @@ public class ItemGroupTransaction {
         CachedSelect.dropCache("group");
         if (size != null) {
             String chart = ImageUtil.uploadProducts(size, group.getId() + "-size-chart");
+            if (chart == null || chart.isBlank()) {
+                return MapResponse.failure("Size chart upload failed. Please try again.");
+            }
             group.set("size_chart", chart).saveIt();
         }
         return MapResponse.success();
@@ -48,6 +51,9 @@ public class ItemGroupTransaction {
         CachedSelect.dropCache("group");
         if (size != null) {
             String chart = ImageUtil.uploadProducts(size, group.getId() + "-size-chart");
+            if (chart == null || chart.isBlank()) {
+                return MapResponse.failure("Size chart upload failed. Please try again.");
+            }
             group.set("size_chart", chart);
         } else if (i != null && removed) {
             ImageUtil.delete(i);

@@ -50,6 +50,12 @@ public class AdminUserController {
                 referer)).write();
     }
 
+    @DeleteMapping("distributors/{id}")
+    @IsAdmin
+    public ResponseEntity<MapResponse> deleteDistributor(@PathVariable long id) {
+        return ((DbTransaction) () -> new AdminUserTransaction().deleteDistributor(id)).write();
+    }
+
     @DeleteMapping("distributors/{id}/avatar")
     @IsAdmin
     public ResponseEntity<MapResponse> avatar(@PathVariable long id) {

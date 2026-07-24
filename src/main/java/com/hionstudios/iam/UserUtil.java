@@ -140,7 +140,7 @@ public class UserUtil {
     }
 
     public static boolean isDistributor() {
-        return getUserDetails().getType().equals(UserType.DISTRIBUTOR);
+        return UserType.DISTRIBUTOR.equals(getUserDetails().getType());
     }
 
     public static MapResponse forgotPassword(String username) {

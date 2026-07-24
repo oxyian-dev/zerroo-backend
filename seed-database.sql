@@ -130,10 +130,10 @@ INSERT INTO stock_ledger_types (id, type) VALUES
     (5, 'Sales');
 
 INSERT INTO branches (id, branch, source_of_supply, phone, email, address_1, address_2, postcode, landmark, city, state, country, gstin) VALUES
-    (1, 'Victory World Chennai', 'Tamil Nadu', '9000000000', 'admin@victoryworld.in', 'Victory World Headquarters', NULL, '600001', 'Marina Beach', 'Chennai', 'Tamil Nadu', 'India', '33AADFZ7502M1ZX');
+    (1, 'VICTORYX CORE NETWORK PRIVATE LIMITED', 'Tamil Nadu', '9000000000', 'admin@victoryworld.in', 'VICTORYX CORE NETWORK PRIVATE LIMITED', NULL, '600001', 'Marina Beach', 'Chennai', 'Tamil Nadu', 'India', '33AAMCV1878N1ZL');
 
 INSERT INTO inventories (id, inventory, contact_name, phone, address_1, address_2, postcode, landmark, city, state, branch_id) VALUES
-    (1, 'Victory World Chennai', 'Victory World Support', '9000000000', 'Victory World Warehouse', NULL, '600001', 'Marina Beach', 'Chennai', 'Tamil Nadu', 1);
+    (1, 'VICTORYX CORE NETWORK PRIVATE LIMITED', 'Victory World Support', '9000000000', 'Victory World Warehouse', NULL, '600001', 'Marina Beach', 'Chennai', 'Tamil Nadu', 1);
 
 INSERT INTO transporters (id, transporter, inventory_id) VALUES
     (1, 'Victory World', 1);
@@ -155,7 +155,7 @@ INSERT INTO distributors (
     parent_id,
     self_pv
 ) VALUES
-    (1, 1, 1, 1, 1, NULL, NULL, 0);
+    (1, 1, 1, NULL, NULL, NULL, NULL, 0);
 
 INSERT INTO addresses (
     id,

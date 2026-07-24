@@ -44,6 +44,9 @@ public class ComboTransaction {
     public MapResponse combo(String name, long category, String description, MultipartFile image) {
         CachedSelect.dropCache("combo-group");
         String imageId = ImageUtil.upload(image, UUID.randomUUID().toString(), WorkDrive.Folder.COMBO);
+        if (imageId == null || imageId.isBlank()) {
+            return MapResponse.failure("Image upload failed. Please try again.");
+        }
         Combo combo = new Combo(name, category, description, imageId);
         return combo.insert() ? MapResponse.success() : MapResponse.failure();
     }
@@ -65,8 +68,11 @@ public class ComboTransaction {
         combo.set("description", description);
         combo.set("category_id", category);
         if (imageChanged) {
-            ImageUtil.delete(combo.getString("image"));
             String imageId = ImageUtil.upload(image, UUID.randomUUID().toString(), WorkDrive.Folder.COMBO);
+            if (imageId == null || imageId.isBlank()) {
+                return MapResponse.failure("Image upload failed. Please try again.");
+            }
+            ImageUtil.delete(combo.getString("image"));
             combo.set("image", imageId);
         }
         return combo.saveIt() ? MapResponse.success() : MapResponse.failure();

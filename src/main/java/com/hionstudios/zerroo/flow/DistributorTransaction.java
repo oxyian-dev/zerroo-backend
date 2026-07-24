@@ -75,13 +75,15 @@ public class DistributorTransaction {
             String phone,
             String email,
             String referer) {
-        String unique = "Select ID From Users Where Email iLike ?";
-        if (Handler.exists(unique, email)) {
-            return MapResponse.failure("Email already exists");
+        String emailCountSql = "Select Count(*) From Users Where Email iLike ?";
+        long emailCount = Handler.getLong(emailCountSql, email);
+        if (emailCount >= 7) {
+            return MapResponse.failure("This email is already used by 7 distributors. Maximum limit reached.");
         }
-        unique = "Select ID From Users Where Phone iLike ?";
-        if (Handler.exists(unique, phone)) {
-            return MapResponse.failure("Phone already exists");
+        String phoneCountSql = "Select Count(*) From Users Where Phone iLike ?";
+        long phoneCount = Handler.getLong(phoneCountSql, phone);
+        if (phoneCount >= 7) {
+            return MapResponse.failure("This phone number is already used by 7 distributors. Maximum limit reached.");
         }
         long refererId = UserUtil.getIdFromUsername(referer);
         if (refererId != UserUtil.getUserid() && !new GenealogyUtil().isUpLine(parent, refererId)) {

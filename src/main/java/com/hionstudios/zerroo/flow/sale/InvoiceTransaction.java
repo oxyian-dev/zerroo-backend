@@ -26,6 +26,7 @@ import com.hionstudios.db.SqlCriteria;
 import com.hionstudios.db.SqlQuery;
 import com.hionstudios.db.SqlUtil;
 import com.hionstudios.iam.UserUtil;
+import com.hionstudios.zerroo.CompanyDetails;
 import com.hionstudios.zerroo.mail.HionTemplateConfig;
 
 public class InvoiceTransaction {
@@ -74,6 +75,13 @@ public class InvoiceTransaction {
 
         MapResponse response = Handler.findFirst(sql, id);
         response.put("items", Handler.findAll(items, id));
+        response.put("company_name", CompanyDetails.NAME);
+        response.put("company_gstin", CompanyDetails.GSTIN);
+        response.put("company_bank_account_holder", CompanyDetails.BANK_ACCOUNT_HOLDER);
+        response.put("company_bank_account_number", CompanyDetails.BANK_ACCOUNT_NUMBER);
+        response.put("company_bank_ifsc", CompanyDetails.BANK_IFSC);
+        response.put("company_bank_branch", CompanyDetails.BANK_BRANCH);
+        response.put("company_bank_account_type", CompanyDetails.BANK_ACCOUNT_TYPE);
         return response;
     }
 

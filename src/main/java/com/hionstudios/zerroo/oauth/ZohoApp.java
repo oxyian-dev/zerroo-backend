@@ -15,7 +15,7 @@ import com.nimbusds.oauth2.sdk.token.RefreshToken;
 public class ZohoApp extends OAuthApp {
     public static final String clientId = "1000.ODBVYN1F6SGHSCVSS3M60ZLYCB0EZW";
     public static final String clientSecret = "0ac7a276da46e068060a2d80498ea5a1d1bf3d0e92";
-    public static final String callbackURL = "http://localhost:8080/oauth/zoho/callback";
+    public static final String callbackURL = "https://victoryworld.in/oauth/zoho/callback";
     public static final String tokenURL = "https://accounts.zoho.in/oauth/v2/token";
     public static final String authURL = "https://accounts.zoho.in/oauth/v2/auth";
     public static final String scope = "WorkDrive.workspace.ALL,WorkDrive.files.ALL";
