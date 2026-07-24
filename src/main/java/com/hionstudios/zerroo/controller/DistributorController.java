@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hionstudios.MapResponse;
 import com.hionstudios.datagrid.DataGridParams;
 import com.hionstudios.db.DbTransaction;
-import com.hionstudios.db.DbUtil;
 import com.hionstudios.iam.IsAuthenticatedUser;
 import com.hionstudios.iam.IsDistributor;
 import com.hionstudios.iam.JwtTokenUtil;
@@ -35,23 +34,13 @@ public class DistributorController {
     @GetMapping("genealogy")
     @IsDistributor
     public ResponseEntity<String> genealogy(HttpServletRequest request, @RequestParam(required = false) String username) {
-        try {
-            String currentUsername = resolveUsername(request);
-            if (currentUsername == null || currentUsername.trim().isEmpty()) {
-                return ResponseEntity.ok(toJson(MapResponse.failure("Unable to load genealogy")));
-            }
-            DbUtil.open();
-            try {
-                MapResponse payload = new DistributorTransaction().genealogy(currentUsername, username);
-                return ResponseEntity.ok(toJson(payload == null ? MapResponse.failure("Unable to load genealogy") : payload));
-            } finally {
-                DbUtil.close();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.ok(toJson(MapResponse.failure(exception.getMessage() == null
-                    ? "Unable to load genealogy"
-                    : exception.getMessage())));
+        String currentUsername = resolveUsername(request);
+        if (currentUsername == null || currentUsername.trim().isEmpty()) {
+            return ResponseEntity.ok(toJson(MapResponse.failure("Unable to load genealogy")));
         }
+        final String finalUsername = username;
+        MapResponse payload = ((DbTransaction) () -> new DistributorTransaction().genealogy(currentUsername, finalUsername)).read().getBody();
+        return ResponseEntity.ok(toJson(payload == null ? MapResponse.failure("Unable to load genealogy") : payload));
     }
 
     @PostMapping("refer")
@@ -71,27 +60,12 @@ public class DistributorController {
     @GetMapping("dashboard")
     @IsAuthenticatedUser
     public ResponseEntity<String> dashboard(HttpServletRequest request) {
-        try {
-            String currentUsername = resolveUsername(request);
-            if (currentUsername == null || currentUsername.trim().isEmpty()) {
-                return ResponseEntity.ok(toJson(MapResponse.failure("Unable to load dashboard")));
-            }
-            DbUtil.open();
-            try {
-                long userId = UserUtil.getUserid();
-                if (userId <= 0) {
-                    return ResponseEntity.ok(toJson(MapResponse.failure("Unable to load dashboard")));
-                }
-                MapResponse payload = new DistributorTransaction().dashboard(userId);
-                return ResponseEntity.ok(toJson(payload == null ? MapResponse.failure("Unable to load dashboard") : payload));
-            } finally {
-                DbUtil.close();
-            }
-        } catch (Exception exception) {
-            return ResponseEntity.ok(toJson(MapResponse.failure(exception.getMessage() == null
-                    ? "Unable to load dashboard"
-                    : exception.getMessage())));
+        long userId = UserUtil.getUserid();
+        if (userId <= 0) {
+            return ResponseEntity.ok(toJson(MapResponse.failure("Unable to load dashboard")));
         }
+        MapResponse payload = ((DbTransaction) () -> new DistributorTransaction().dashboard(userId)).read().getBody();
+        return ResponseEntity.ok(toJson(payload == null ? MapResponse.failure("Unable to load dashboard") : payload));
     }
 
     @GetMapping("zid/{username}")
@@ -100,6 +74,7 @@ public class DistributorController {
     }
 
     @GetMapping("declaration-status")
+    @IsAuthenticatedUser
     public ResponseEntity<MapResponse> getDeclarationStatus() {
         return ((DbTransaction) () -> new DistributorTransaction().getDeclarationStatus()).read();
     }
