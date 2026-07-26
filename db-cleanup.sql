@@ -76,7 +76,8 @@ TRUNCATE TABLE
     stocks,
     transfer_items,
     transporter_courier_mappings,
-    transporters
+    transporters,
+    wishlists
 CASCADE;
 
 COMMIT;

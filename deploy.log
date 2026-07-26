@@ -1,261 +1,188 @@
-nohup: ignoring input
  _____                         
 |__  /___ _ __ _ __ ___   ___  
   / // _ \ '__| '__/ _ \ / _ \ 
  / /|  __/ |  | | | (_) | (_) |
 /____\___|_|  |_|  \___/ \___/ 
-2026-07-24 04:36:55.905  INFO 99658 --- [           main] com.hionstudios.HionApplication          : Starting HionApplication v1.0 using Java 11.0.31 on zerroo-server with PID 99658 (/home/oxyiandev/zerroo-backend/target/ROOT.war started by oxyiandev in /home/oxyiandev/zerroo-backend)
-2026-07-24 04:36:55.910  INFO 99658 --- [           main] com.hionstudios.HionApplication          : The following 1 profile is active: "production"
-2026-07-24 04:36:58.292  INFO 99658 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2026-07-24 04:36:58.310  INFO 99658 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-07-24 04:36:58.311  INFO 99658 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.75]
-2026-07-24 04:37:00.641  INFO 99658 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-07-24 04:37:00.641  INFO 99658 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4603 ms
-2026-07-24 04:37:01.736  WARN 99658 --- [           main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/api/invoices/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2026-07-24 04:37:01.737  INFO 99658 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/api/invoices/**']
-2026-07-24 04:37:01.738  WARN 99658 --- [           main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/api/ui/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2026-07-24 04:37:01.738  INFO 99658 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/api/ui/**']
-2026-07-24 04:37:01.806  INFO 99658 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@495083a0, org.springframework.security.web.context.SecurityContextPersistenceFilter@191ae03f, org.springframework.security.web.header.HeaderWriterFilter@41fe9859, org.springframework.web.filter.CorsFilter@5fd62371, org.springframework.security.web.authentication.logout.LogoutFilter@60d8c0dc, com.hionstudios.iam.JwtRequestFilter@1c6804cd, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@46e8a539, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@53ab0286, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c98290c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@28a0fd6c, org.springframework.security.web.session.SessionManagementFilter@6c67e137, org.springframework.security.web.access.ExceptionTranslationFilter@4a9f80d3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51e4ccb3]
-2026-07-24 04:37:02.968  INFO 99658 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2026-07-24 04:37:03.032  INFO 99658 --- [           main] com.hionstudios.HionApplication          : Started HionApplication in 8.078 seconds (JVM running for 9.11)
-2026-07-24 04:37:06.638  INFO 99658 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-24 04:37:06.639  INFO 99658 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-07-24 04:37:06.643  INFO 99658 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
-2026-07-24 04:39:36.529  INFO 99658 --- [nio-8080-exec-1] o.j.a.connection_config.DBConfiguration  : Adding: {"environment":"development","db_name":"default","testing":false,"class":"org.javalite.activejdbc.connection_config.ConnectionJdbcConfig"}
-2026-07-24 04:39:36.543  WARN 99658 --- [nio-8080-exec-9] org.javalite.app_config.AppConfig        : Environment variable 'ACTIVE_ENV' as well as system property `active_env` are not found, defaulting to 'development' environment.
-2026-07-24 04:39:36.544  WARN 99658 --- [nio-8080-exec-9] org.javalite.app_config.AppConfig        : Property file not found: '/app_config/development.properties'
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
+2026-07-26 14:41:25.945  INFO 328576 --- [           main] com.hionstudios.HionApplication          : Starting HionApplication v1.0 using Java 11.0.31 on zerroo-server with PID 328576 (/home/oxyiandev/zerroo-backend/target/ROOT.war started by oxyiandev in /home/oxyiandev/zerroo-backend)
+2026-07-26 14:41:25.974  INFO 328576 --- [           main] com.hionstudios.HionApplication          : The following 1 profile is active: "production"
+2026-07-26 14:41:28.380  INFO 328576 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2026-07-26 14:41:28.469  INFO 328576 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-26 14:41:28.469  INFO 328576 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.75]
+2026-07-26 14:41:30.489  INFO 328576 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-26 14:41:30.489  INFO 328576 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4407 ms
+2026-07-26 14:41:31.035  WARN 328576 --- [           main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/api/invoices/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2026-07-26 14:41:31.036  INFO 328576 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/api/invoices/**']
+2026-07-26 14:41:31.037  WARN 328576 --- [           main] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/api/ui/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2026-07-26 14:41:31.037  INFO 328576 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/api/ui/**']
+2026-07-26 14:41:31.091  INFO 328576 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5f4d427e, org.springframework.security.web.context.SecurityContextPersistenceFilter@60fa3495, org.springframework.security.web.header.HeaderWriterFilter@60d8c0dc, org.springframework.web.filter.CorsFilter@6e521c1e, org.springframework.security.web.authentication.logout.LogoutFilter@6a988392, com.hionstudios.iam.JwtRequestFilter@3f0846c6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@37f21974, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@79e18e38, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@69c79f09, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@224b4d61, org.springframework.security.web.session.SessionManagementFilter@6a62689d, org.springframework.security.web.access.ExceptionTranslationFilter@51df223b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@f9879ac]
+2026-07-26 14:41:31.834  INFO 328576 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2026-07-26 14:41:31.902  INFO 328576 --- [           main] com.hionstudios.HionApplication          : Started HionApplication in 7.578 seconds (JVM running for 8.587)
+2026-07-26 14:56:57.928  INFO 328576 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-26 14:56:57.929  INFO 328576 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-26 14:56:57.931  INFO 328576 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-07-26 14:56:58.532  INFO 328576 --- [nio-8080-exec-1] o.j.a.connection_config.DBConfiguration  : Adding: {"environment":"development","db_name":"default","testing":false,"class":"org.javalite.activejdbc.connection_config.ConnectionJdbcConfig"}
+2026-07-26 14:56:58.532  INFO 328576 --- [nio-8080-exec-1] o.j.a.connection_config.DBConfiguration  : Adding: {"environment":"production","db_name":"default","testing":false,"class":"org.javalite.activejdbc.connection_config.ConnectionJdbcConfig"}
+2026-07-26 14:56:58.537  WARN 328576 --- [nio-8080-exec-1] org.javalite.app_config.AppConfig        : Environment variable 'ACTIVE_ENV' as well as system property `active_env` are not found, defaulting to 'development' environment.
+2026-07-26 14:56:58.537  WARN 328576 --- [nio-8080-exec-1] org.javalite.app_config.AppConfig        : Property file not found: '/app_config/development.properties'
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+org.springframework.security.authentication.BadCredentialsException: Bad credentials
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.authenticate(AbstractUserDetailsAuthenticationProvider.java:141)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:201)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter$AuthenticationManagerDelegator.authenticate(WebSecurityConfigurerAdapter.java:518)
+	at com.hionstudios.iam.Authenticator.authenticate(Authenticator.java:37)
+	at com.hionstudios.zerroo.controller.AuthController.createAuthenticationToken(AuthController.java:34)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:219)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:213)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at com.hionstudios.iam.JwtRequestFilter.authenticateToken(JwtRequestFilter.java:104)
+	at com.hionstudios.iam.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:64)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
 USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-DISTRIBUTOR resolve auth=Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWQzAwMDAxIiwiZXhwIjoxNzg0OTk5NTYwLCJpYXQiOjE3ODQ4MjY3NjB9.QqlevSNU9lOTIXmG6EOICNGkqxFToS781XCW6suv6_qY4-AuMK2MGzFXKrEioZGvE65MIVom8yFqcY_vhXnwpg
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
 USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
 USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-DISTRIBUTOR resolve auth=Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWQzAwMDAxIiwiZXhwIjoxNzg0OTk5NTYwLCJpYXQiOjE3ODQ4MjY3NjB9.QqlevSNU9lOTIXmG6EOICNGkqxFToS781XCW6suv6_qY4-AuMK2MGzFXKrEioZGvE65MIVom8yFqcY_vhXnwpg
+DISTRIBUTOR resolve auth=Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWQzAwMDAxIiwiZXhwIjoxNzg1MjUwNjc4LCJpYXQiOjE3ODUwNzc4Nzh9.oM_kWplzv2wWLkBwOr7GnR0ESIRpChkrbga6Ubcpep1rP_7SU6gpMyNzNeUcYwedbLZEm-SOoj0abKtO4SGAeA
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
 USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=VC00001 resolved=1 type=Distributor username=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-2026-07-24 04:45:57.212 ERROR 99658 --- [nio-8080-exec-5] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8080-exec-5] Exception processing template "index": An error happened during template parsing (template: "templates/index.html")
+Exception in thread "Thread-1" org.springframework.mail.MailAuthenticationException: Authentication failed; nested exception is javax.mail.AuthenticationFailedException: 535 Authentication Failed
 
-org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "templates/index.html")
-	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:235) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:649) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1098) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1072) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.spring5.view.ThymeleafView.renderFragment(ThymeleafView.java:366) ~[thymeleaf-spring5-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.spring5.view.ThymeleafView.render(ThymeleafView.java:190) ~[thymeleaf-spring5-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1406) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1150) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:219) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:213) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at com.hionstudios.iam.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:70) ~[classes!/:1.0]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
-Caused by: java.io.FileNotFoundException: ClassLoader resource "templates/index.html" could not be resolved
-	at org.thymeleaf.templateresource.ClassLoaderTemplateResource.reader(ClassLoaderTemplateResource.java:130) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:223) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	... 96 common frames omitted
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:440)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:361)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.send(JavaMailSenderImpl.java:356)
+	at com.hionstudios.zerroo.mail.MailUtil.sendMail(MailUtil.java:57)
+	at com.hionstudios.zerroo.mail.MailUtil.sendMail(MailUtil.java:36)
+	at com.hionstudios.zerroo.mail.MailUtil.lambda$sendMailAsync$0(MailUtil.java:32)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: javax.mail.AuthenticationFailedException: 535 Authentication Failed
 
-2026-07-24 04:45:57.217 ERROR 99658 --- [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "templates/index.html")] with root cause
+	at com.sun.mail.smtp.SMTPTransport$Authenticator.authenticate(SMTPTransport.java:947)
+	at com.sun.mail.smtp.SMTPTransport.authenticate(SMTPTransport.java:858)
+	at com.sun.mail.smtp.SMTPTransport.protocolConnect(SMTPTransport.java:762)
+	at javax.mail.Service.connect(Service.java:342)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.connectTransport(JavaMailSenderImpl.java:518)
+	at org.springframework.mail.javamail.JavaMailSenderImpl.doSend(JavaMailSenderImpl.java:437)
+	... 6 more
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
+2026-07-26 14:58:40.640  INFO 328576 --- [nio-8080-exec-9] o.apache.coyote.http11.Http11Processor   : Error parsing HTTP request header
+ Note: further occurrences of HTTP request parsing errors will be logged at DEBUG level.
 
-java.io.FileNotFoundException: ClassLoader resource "templates/index.html" could not be resolved
-	at org.thymeleaf.templateresource.ClassLoaderTemplateResource.reader(ClassLoaderTemplateResource.java:130) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:223) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:649) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1098) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1072) ~[thymeleaf-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.spring5.view.ThymeleafView.renderFragment(ThymeleafView.java:366) ~[thymeleaf-spring5-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.thymeleaf.spring5.view.ThymeleafView.render(ThymeleafView.java:190) ~[thymeleaf-spring5-3.0.15.RELEASE.jar!/:3.0.15.RELEASE]
-	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1406) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1150) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.27.jar!/:5.3.27]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:219) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:213) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at com.hionstudios.iam.JwtRequestFilter.doFilterInternal(JwtRequestFilter.java:70) ~[classes!/:1.0]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:110) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:80) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186) ~[spring-security-web-5.6.10.jar!/:5.6.10]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar!/:5.3.27]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:673) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.75.jar!/:na]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390) ~[tomcat-embed-core-9.0.75.jar!/:na]
+java.lang.IllegalArgumentException: Invalid character found in method name [0x160x030x010x000xee0x010x000x000xea0x030x03ik*0xffh0x0eE7+!0xe6Y0xd70xf4p0x9a0x870xa70x900xeb?0xa8FY0x1cX:0xec0xaa0x83|\ ]. HTTP method names must be tokens
+	at org.apache.coyote.http11.Http11InputBuffer.parseRequestLine(Http11InputBuffer.java:407) ~[tomcat-embed-core-9.0.75.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:263) ~[tomcat-embed-core-9.0.75.jar!/:na]
 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-9.0.75.jar!/:na]
 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) ~[tomcat-embed-core-9.0.75.jar!/:na]
 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) ~[tomcat-embed-core-9.0.75.jar!/:na]
@@ -265,74 +192,8 @@ java.io.FileNotFoundException: ClassLoader resource "templates/index.html" could
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.75.jar!/:na]
 	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
 
+JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=VC00001
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-2026-07-24 05:02:15.652  WARN 99658 --- [nio-8080-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.multipart.support.MissingServletRequestPartException: Required request part 'images' is not present]
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
-USERUTIL userid auth=org.springframework.security.authentication.UsernamePasswordAuthenticationToken principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in resolved=10001 type=Organisation User username=admin@victoryworld.in
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
 JWT AUTH SET principal=com.hionstudios.iam.HionUserDetails name=admin@victoryworld.in
